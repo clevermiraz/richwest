@@ -43,6 +43,8 @@ export default function ContactPage() {
           </>
         }
         intro="Have a question or ready to get a quote? Reach out to our team today. WhatsApp is the fastest way to reach us."
+        image="/images/composite-deck-balcony-sg.webp"
+        caption="Composite timber decking, condominium balcony"
       >
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
           <a

@@ -13,7 +13,8 @@ const tiles = [
   { cell: "lg:col-span-5", media: "aspect-[16/10]" },
   { cell: "lg:col-span-4", media: "aspect-[4/3]" },
   { cell: "lg:col-span-4", media: "aspect-[4/3]" },
-  { cell: "lg:col-span-4", media: "aspect-[4/3]" },
+  // Spans both columns on tablets so the two-column grid never ends on an orphan.
+  { cell: "sm:col-span-2 lg:col-span-4", media: "aspect-[4/3] sm:aspect-[21/9] lg:aspect-[4/3]" },
 ];
 
 interface PortfolioGridProps {

@@ -40,8 +40,12 @@ export function PostCard({ post, feature = false, headingLevel: Heading = "h3", 
       <div className={cn(feature && "lg:col-span-5")}>
         {feature && <p className="kicker mt-6 mb-3 lg:mt-0">Latest article</p>}
         <p className={cn("flex flex-wrap items-center gap-x-3 text-sm text-ink-3", !feature && "mt-5")}>
-          <span className="capitalize">{post.keywords[0] ?? "Flooring"}</span>
-          <span aria-hidden="true">·</span>
+          {feature && (
+            <>
+              <span className="capitalize">{post.keywords[0] ?? "Flooring"}</span>
+              <span aria-hidden="true">·</span>
+            </>
+          )}
           <time dateTime={post.dateISO}>{formatDate(post.dateISO)}</time>
           <span aria-hidden="true">·</span>
           <span>{post.readTime}</span>

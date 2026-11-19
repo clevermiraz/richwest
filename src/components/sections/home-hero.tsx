@@ -18,18 +18,23 @@ export function HomeHero() {
 
   return (
     <section className="relative pt-(--header-offset)">
-      <div className="container-page grid gap-12 pt-10 pb-16 md:pt-16 lg:grid-cols-12 lg:gap-10 lg:pt-14 lg:pb-24">
-        <div className="intro flex flex-col justify-center lg:col-span-7 lg:pr-6">
+      {/*
+        Phones: kicker and headline, then the photo, then the copy and actions
+        (the text wrapper is display: contents so its children can be reordered).
+        Desktop: text column on the left, photo on the right.
+      */}
+      <div className="container-page flex flex-col pt-8 pb-14 md:pt-16 lg:grid lg:grid-cols-12 lg:gap-10 lg:pt-14 lg:pb-24">
+        <div className="intro contents lg:col-span-7 lg:flex lg:flex-col lg:justify-center lg:pr-6">
           <p className="kicker" style={d(0)}>
             Flooring &amp; decking contractor · Singapore since {site.foundedYear}
           </p>
           <h1 className="display-1 text-ink" style={d(1)}>
             Your premium <em className="text-timber">flooring partner</em> in Singapore.
           </h1>
-          <p className="lede mt-7 max-w-xl" style={d(2)}>
+          <p className="lede mt-7 max-w-xl max-lg:order-2" style={d(2)}>
             {hero.subheadline}
           </p>
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row" style={d(3)}>
+          <div className="mt-9 flex flex-col gap-3 max-lg:order-2 sm:flex-row" style={d(3)}>
             <Link
               href="/contact"
               className="btn btn-lg btn-primary"
@@ -52,18 +57,18 @@ export function HomeHero() {
               <span className="sr-only">(opens in a new tab)</span>
             </a>
           </div>
-          <p className="mt-6 text-sm text-ink-3" style={d(4)}>
+          <p className="mt-6 text-sm text-ink-3 max-lg:order-2" style={d(4)}>
             {site.replyPromise} · Free on-site measurement and samples
           </p>
         </div>
 
-        <figure className="lg:col-span-5 lg:self-center">
+        <figure className="mt-8 max-lg:order-1 lg:col-span-5 lg:mt-0 lg:self-center">
           <div className="relative">
             <div className="unveil relative aspect-[4/3] overflow-hidden rounded-lg bg-paper-2 sm:aspect-[16/11] lg:aspect-[4/5]">
               <SiteImage
                 src={hero.backgroundImageUrl}
                 priority
-                sizes="(max-width: 1024px) 100vw, 42vw"
+                sizes="(max-width: 640px) calc(100vw - 2.5rem), (max-width: 1024px) calc(100vw - 4rem), 42vw"
                 className="h-full w-full object-cover"
               />
             </div>
@@ -86,7 +91,7 @@ export function HomeHero() {
           </div>
           <figcaption className="mt-3 flex items-center justify-between gap-4 text-sm text-ink-3">
             <span>Engineered oak, residential hallway</span>
-            <span className="shrink-0 tabular-nums">01 / Wooden floor</span>
+            <span className="hidden shrink-0 tabular-nums sm:inline">01 / Wooden floor</span>
           </figcaption>
         </figure>
       </div>

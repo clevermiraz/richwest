@@ -13,7 +13,7 @@ export const faqs: readonly FaqItem[] = [
       "Yes. Vinyl flooring is popular in Singapore for its water resistance, comfort, and easy maintenance. The best system depends on your subfloor condition and usage.",
   },
   {
-    question: "Is a wooden floor suitable for Singapore's humidity?",
+    question: "Is a wooden floor suitable for Singapore’s humidity?",
     answer:
       "Yes, when the right timber system is chosen and installed with moisture-aware practices. We also provide aftercare guidance to keep your wooden floor stable and looking premium.",
   },

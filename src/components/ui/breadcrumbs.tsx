@@ -23,7 +23,7 @@ export function Breadcrumbs({ items, tone = "dark" }: { items: readonly Crumb[];
                 </span>
               )}
               {item.href && !isLast ? (
-                <Link href={item.href} className={`${link} transition-colors`}>
+                <Link href={item.href} className={`${link} -my-3 inline-flex min-h-11 items-center transition-colors`}>
                   {item.name}
                 </Link>
               ) : (

@@ -43,22 +43,25 @@ export function ProcessSteps({ showLink = true }: ProcessStepsProps) {
           <div aria-hidden="true" className="absolute top-0 right-0 left-0 hidden h-px bg-line-dark lg:block">
             <div data-draw="" className="h-px w-full bg-oak" />
           </div>
-          <ol className="grid gap-10 sm:grid-cols-2 lg:grid-cols-5 lg:gap-8">
+          <ol className="grid gap-6 sm:grid-cols-2 sm:gap-10 lg:grid-cols-5 lg:gap-8">
             {processSteps.map((step, i) => (
               <li
                 key={step.title}
                 data-reveal=""
                 style={{ "--i": i } as CSSProperties}
-                className="relative border-t border-line-dark pt-6 lg:border-t-0 lg:pt-10"
+                className="relative grid grid-cols-[3.25rem_1fr] border-t border-line-dark pt-6 sm:block lg:border-t-0 lg:pt-10"
               >
                 <span
                   aria-hidden="true"
                   className="absolute top-0 left-0 hidden h-2.5 w-2.5 -translate-y-1/2 rounded-full bg-oak ring-4 ring-night lg:block"
                 />
-                <p className="font-display text-[2.5rem] leading-none text-oak tabular-nums" aria-hidden="true">
+                <p
+                  className="row-span-2 font-display text-[2rem] leading-none text-oak tabular-nums sm:text-[2.5rem]"
+                  aria-hidden="true"
+                >
                   {String(i + 1).padStart(2, "0")}
                 </p>
-                <h3 className="mt-5 text-lg font-semibold text-paper">
+                <h3 className="text-lg font-semibold text-paper sm:mt-5">
                   <span className="sr-only">Step {i + 1}: </span>
                   {step.title}
                 </h3>

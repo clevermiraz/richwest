@@ -46,7 +46,7 @@ export const expertise: readonly ExpertiseCard[] = [
     items: ["Wooden Deck", "Wooden Deck Varnish", "Composite Deck", "Composite Timber Deck", "Outdoor Deck"],
     image: "/images/composite-deck-balcony-sg.webp",
     description:
-      "Outdoor decking for balconies, patios, and rooftops, built for Singapore's sun and rain with proper drainage, ventilation, and safe edge detailing.",
+      "Outdoor decking for balconies, patios, and rooftops, built for Singapore’s sun and rain with proper drainage, ventilation, and safe edge detailing.",
     href: "/services/wooden-deck",
     icon: "Sun",
   },
@@ -142,7 +142,7 @@ export const testimonials: readonly Testimonial[] = [
     role: "Interior Designer",
     initials: "SL",
     content:
-      "As a designer I am very particular about flooring finishes. Richwest's vinyl flooring installation was clean and precise. Skirting, transitions, and edge detailing were all done properly. My go-to for residential projects.",
+      "As a designer I am very particular about flooring finishes. Richwest’s vinyl flooring installation was clean and precise. Skirting, transitions, and edge detailing were all done properly. My go-to for residential projects.",
     rating: 5,
   },
   {

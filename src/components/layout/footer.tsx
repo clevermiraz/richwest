@@ -21,7 +21,7 @@ export async function Footer() {
   const whatsappHref = `${site.whatsapp}?text=${encodeURIComponent("Hi Richwest, I'd like a quote for my floor.")}`;
 
   return (
-    <footer className="on-dark bg-night grain pb-28 text-paper sm:pb-12">
+    <footer className="on-dark bg-night grain pb-28 text-paper">
       <div className="container-page">
         {/* Closing call to action */}
         <div className="flex flex-col gap-8 border-b border-line-dark py-16 md:py-24 lg:flex-row lg:items-end lg:justify-between">
@@ -55,7 +55,7 @@ export async function Footer() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-x-6 gap-y-12 py-14 md:grid-cols-12 md:gap-x-10">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-12 py-14 md:grid-cols-3 md:gap-x-10 lg:grid-cols-12">
           <div className="col-span-2 md:col-span-3">
             <Link href="/" className="inline-block" translate="no">
               <Logo variant="light" className="h-9 w-auto" />
@@ -84,31 +84,38 @@ export async function Footer() {
                 <FacebookIcon />
                 <span className="sr-only">Richwest Integrated on Facebook (opens in a new tab)</span>
               </a>
-              <a
-                href={site.googleReviews}
-                target="_blank"
-                rel="noopener noreferrer"
-                data-track="section_click"
-                data-section="google_reviews_footer"
-                className="ml-1 inline-flex h-11 items-center gap-2 rounded-full border border-line-dark px-4 text-sm text-paper/80 transition-colors hover:border-paper/40 hover:text-paper"
-              >
-                <GoogleIcon size={16} />
-                Google reviews
-                <ArrowUpRight size={14} aria-hidden="true" />
-                <span className="sr-only">(opens in a new tab)</span>
-              </a>
             </div>
+            <a
+              href={site.googleReviews}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-track="section_click"
+              data-section="google_reviews_footer"
+              className="group mt-6 inline-flex items-center gap-3 whitespace-nowrap"
+            >
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-paper">
+                <GoogleIcon size={18} />
+              </span>
+              <span className="leading-tight">
+                <span className="block text-sm text-paper/60">Reviewed on Google</span>
+                <span className="flex items-center gap-1 font-medium text-paper decoration-paper/40 underline-offset-4 group-hover:underline">
+                  Read our reviews
+                  <ArrowUpRight size={14} aria-hidden="true" className="arrow arrow-up" />
+                </span>
+              </span>
+              <span className="sr-only">(opens in a new tab)</span>
+            </a>
           </div>
 
           {serviceGroups.slice(0, 2).map((group) => (
-            <nav key={group.name} aria-labelledby={`footer-${group.name}`} className="md:col-span-2">
+            <nav key={group.name} aria-labelledby={`footer-${group.name}`} className="lg:col-span-2">
               <h2 id={`footer-${group.name}`} className={headingClass}>
                 {group.name}
               </h2>
-              <ul className="space-y-1">
+              <ul>
                 {group.items.map((l) => (
                   <li key={l.href}>
-                    <Link href={l.href} className={`${linkClass} inline-block py-1`}>
+                    <Link href={l.href} className={`${linkClass} inline-flex min-h-11 items-center`}>
                       {l.name}
                     </Link>
                   </li>
@@ -117,14 +124,14 @@ export async function Footer() {
             </nav>
           ))}
 
-          <nav aria-labelledby="footer-company" className="md:col-span-2">
+          <nav aria-labelledby="footer-company" className="lg:col-span-2">
             <h2 id="footer-company" className={headingClass}>
               Company
             </h2>
-            <ul className="space-y-1">
+            <ul>
               {[...companyLinks, ...serviceGroups[2].items].map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} className={`${linkClass} inline-block py-1`}>
+                  <Link href={l.href} className={`${linkClass} inline-flex min-h-11 items-center`}>
                     {l.name}
                   </Link>
                 </li>
@@ -146,7 +153,7 @@ export async function Footer() {
                 <span className="sr-only"> (opens Google Maps in a new tab)</span>
               </a>
             </address>
-            <dl className="mt-5 space-y-1 text-sm">
+            <dl className="mt-5 max-w-xs space-y-1 text-sm">
               {hoursDisplay.map((h) => (
                 <div key={h.label} className="flex justify-between gap-4">
                   <dt className="whitespace-nowrap text-paper/60">{h.label}</dt>

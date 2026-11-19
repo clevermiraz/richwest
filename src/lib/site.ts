@@ -11,7 +11,8 @@ export const site = {
   description:
     "Get reliable flooring solutions in Singapore from Richwest Integrated. Quality flooring services for residential and commercial spaces. Contact us today!",
   phone: {
-    display: "+65 9625 2205",
+    /** Non-breaking spaces so the number never wraps mid-way. */
+    display: "+65\u00a09625\u00a02205",
     e164: "+6596252205",
   },
   whatsapp: "https://wa.me/6596252205",

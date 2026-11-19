@@ -24,7 +24,7 @@ export function localBusinessSchema() {
     url: absoluteUrl("/"),
     logo: absoluteUrl("/logo-512.png"),
     image: absoluteUrl("/images/wooden-floor-hallway.webp"),
-    telephone: site.phone.display,
+    telephone: site.phone.display.replace(/\u00a0/g, " "),
     email: site.email,
     priceRange: "$$",
     foundingDate: String(site.foundedYear),
@@ -155,7 +155,7 @@ export const contactPageEntity = {
   mainEntity: {
     ...ORGANIZATION_REF,
     email: site.email,
-    telephone: site.phone.display,
+    telephone: site.phone.display.replace(/\u00a0/g, " "),
     address: postalAddress,
   },
 };

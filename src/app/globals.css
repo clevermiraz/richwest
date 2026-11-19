@@ -89,6 +89,20 @@
     background: var(--color-paper);
   }
 
+  /* Phones: keep focused fields clear of the sticky call/WhatsApp bar. */
+  @media (max-width: 639px) {
+    html {
+      scroll-padding-bottom: calc(5rem + env(safe-area-inset-bottom));
+    }
+  }
+
+  /* No rubber-band bounce with a mouse; touch keeps pull-to-refresh. */
+  @media (pointer: fine) {
+    html {
+      overscroll-behavior: none;
+    }
+  }
+
   body {
     @apply bg-paper font-sans text-[1.0625rem] leading-relaxed text-ink antialiased;
     font-feature-settings: "ss01", "cv11";
