@@ -1,8 +1,8 @@
-import Link from "next/link";
+import type { CSSProperties } from "react";
 import { NewsletterForm } from "@/components/sections/newsletter-form";
 import { PageHero } from "@/components/sections/page-hero";
-import { SiteImage } from "@/components/ui/site-image";
 import { JsonLd } from "@/components/seo/json-ld";
+import { PostCard } from "@/components/ui/post-card";
 import { posts } from "@/content/posts";
 import { breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
 import { buildMetadata } from "@/lib/seo";
@@ -18,8 +18,11 @@ export const metadata = buildMetadata({
 });
 
 export default function BlogPage() {
+  const sorted = [...posts].sort((a, b) => b.dateISO.localeCompare(a.dateISO));
+  const [lead, ...rest] = sorted;
+
   return (
-    <div className="pt-(--header-offset)">
+    <>
       <JsonLd
         data={[
           {
@@ -52,58 +55,44 @@ export default function BlogPage() {
       />
 
       <PageHero
-        title="Our Blog"
+        breadcrumbs={[{ name: "Home", href: "/" }, { name: "Journal" }]}
+        kicker="The Richwest journal"
+        title={
+          <>
+            Our <em className="text-timber">blog</em>
+          </>
+        }
         intro="Expert advice, maintenance tips, and the latest trends in flooring and decking."
       />
 
-      <section className="bg-slate-50 py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
-            {posts.map((post) => (
-              <article
-                key={post.id}
-                className="flex flex-col overflow-hidden rounded-5xl border border-slate-50 bg-white shadow-[0_10px_40px_rgba(0,0,0,0.03)] transition-[translate,box-shadow] duration-700 hover:-translate-y-2 hover:shadow-[0_30px_80px_rgba(188,108,37,0.15)]"
-              >
-                <div className="h-64 overflow-hidden">
-                  <SiteImage
-                    src={post.image}
-                    altFallback={post.title}
-                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    className="h-full w-full object-cover"
-                  />
-                </div>
-                <div className="flex grow flex-col p-10">
-                  <p className="mb-4 text-xs font-black tracking-[0.2em] text-slate-600 uppercase">
-                    {post.keywords[0] ?? "Flooring & Decking"} • {post.readTime}
-                  </p>
-                  <h2 className="mb-5 text-2xl leading-tight font-black text-slate-900">
-                    <Link href={`/blog/${post.slug}`} className="transition-colors hover:text-wood-ink">
-                      {post.title}
-                    </Link>
-                  </h2>
-                  <p className="mb-8 grow text-lg leading-relaxed text-slate-600">{post.excerpt}</p>
-                  <Link
-                    href={`/blog/${post.slug}`}
-                    className="inline-flex items-center gap-3 text-sm font-black tracking-widest text-wood-ink uppercase"
-                  >
-                    Read Article<span className="sr-only">: {post.title}</span>
-                  </Link>
-                </div>
-              </article>
+      <section aria-label="Articles" className="py-16 md:py-24">
+        <div className="container-page">
+          <PostCard post={lead} feature headingLevel="h2" className="mb-16 md:mb-24" />
+          <div className="grid gap-x-8 gap-y-14 border-t border-line pt-14 md:grid-cols-2 lg:grid-cols-3">
+            {rest.map((post, i) => (
+              <div key={post.id} data-reveal="" style={{ "--i": i % 3 } as CSSProperties}>
+                <PostCard post={post} headingLevel="h2" />
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="border-t border-slate-100 bg-white py-24">
-        <div className="relative mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
-          <h2 className="mb-6 text-3xl font-bold text-slate-900">Subscribe to our Newsletter</h2>
-          <p className="mb-10 text-slate-600">
-            Get the latest flooring tips and exclusive offers delivered straight to your inbox.
-          </p>
-          <NewsletterForm />
+      <section aria-labelledby="newsletter-heading" className="border-t border-line bg-paper-2 py-16 md:py-24">
+        <div className="container-page grid gap-8 lg:grid-cols-12 lg:items-end">
+          <div className="lg:col-span-6">
+            <h2 id="newsletter-heading" className="display-2">
+              Subscribe to our <em className="text-timber">newsletter</em>
+            </h2>
+            <p className="mt-4 text-ink-2">
+              Get the latest flooring tips and exclusive offers delivered straight to your inbox.
+            </p>
+          </div>
+          <div className="lg:col-span-6">
+            <NewsletterForm />
+          </div>
         </div>
       </section>
-    </div>
+    </>
   );
 }

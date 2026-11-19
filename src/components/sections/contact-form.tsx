@@ -41,8 +41,8 @@ export function ContactForm() {
   });
 
   return (
-    <form ref={formRef} action={formAction} aria-busy={pending} className="space-y-6">
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+    <form ref={formRef} action={formAction} aria-busy={pending} className="space-y-5">
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
         <div>
           <label htmlFor="contact-name" className="form-label">
             Full Name
@@ -119,7 +119,7 @@ export function ContactForm() {
             name="service"
             required
             defaultValue={values.service ?? ""}
-            className="form-input appearance-none pr-12"
+            className="form-input appearance-none pr-11"
             {...a11y("service")}
           >
             <option value="" disabled>
@@ -134,7 +134,7 @@ export function ContactForm() {
           <ChevronDown
             size={20}
             aria-hidden="true"
-            className="pointer-events-none absolute top-1/2 right-5 -translate-y-1/2 text-slate-600"
+            className="pointer-events-none absolute top-1/2 right-4 -translate-y-1/2 text-ink-3"
           />
         </div>
         <FieldError id="contact-service-error" message={errors.service} />
@@ -142,7 +142,7 @@ export function ContactForm() {
 
       <div>
         <label htmlFor="contact-message" className="form-label">
-          Your Message <span className="font-medium tracking-normal text-slate-600 normal-case">(optional)</span>
+          Your Message <span className="font-normal text-ink-3">(optional)</span>
         </label>
         <textarea
           id="contact-message"
@@ -164,7 +164,7 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={pending}
-        className="btn btn-lg btn-dark w-full transition-transform hover:scale-[1.02] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-70"
+        className="btn btn-lg btn-primary w-full disabled:cursor-progress disabled:opacity-80"
       >
         {pending ? "Sending…" : "Send inquiry"}
         {pending ? (
@@ -174,20 +174,20 @@ export function ContactForm() {
         )}
       </button>
 
-      <p className="flex items-center justify-center gap-2 text-sm font-medium text-slate-600">
-        <Clock size={16} aria-hidden="true" className="shrink-0 text-wood-ink" />
+      <p className="flex items-center justify-center gap-2 text-sm text-ink-3">
+        <Clock size={16} aria-hidden="true" className="shrink-0 text-timber" />
         {site.replyPromise} during business hours.
       </p>
 
       <div aria-live="polite" role="status" className="min-h-6">
         {state.status === "success" && (
-          <p className="flex items-start gap-2 rounded-2xl border border-green-200 bg-green-50 px-4 py-3 text-sm font-semibold text-green-800">
+          <p className="flex items-start gap-2 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm font-semibold text-green-800">
             <CircleCheck size={18} aria-hidden="true" className="mt-0.5 shrink-0" />
             Thank you. Your inquiry has been sent and we will get back to you within 1 hour during business hours.
           </p>
         )}
         {state.status === "error" && !state.fieldErrors && (
-          <p className="flex items-start gap-2 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-800">
+          <p className="flex items-start gap-2 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-800">
             <CircleAlert size={18} aria-hidden="true" className="mt-0.5 shrink-0" />
             <span>
               Sorry, something went wrong. Please call us on{" "}

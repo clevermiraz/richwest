@@ -10,7 +10,7 @@ export function NewsletterForm() {
 
   return (
     <form action={formAction}>
-      <div className="flex flex-col gap-4 sm:flex-row">
+      <div className="flex flex-col gap-3 sm:flex-row">
         <label htmlFor="newsletter-email" className="sr-only">
           Email address
         </label>
@@ -25,7 +25,7 @@ export function NewsletterForm() {
           spellCheck={false}
           enterKeyHint="go"
           placeholder="you@example.com"
-          className="grow rounded-2xl border border-slate-300 bg-slate-50 px-6 py-4 text-slate-900 outline-none placeholder:text-slate-500 user-invalid:border-red-500 focus-visible:ring-2 focus-visible:ring-wood-ink"
+          className="form-input grow rounded-full px-6"
         />
         <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
           <input name="company_website" type="text" tabIndex={-1} autoComplete="off" />
@@ -33,7 +33,7 @@ export function NewsletterForm() {
         <button
           type="submit"
           disabled={pending}
-          className="rounded-2xl bg-wood-accent px-8 py-4 font-bold text-white shadow-lg transition-colors hover:bg-wood-dark disabled:opacity-70"
+          className="btn btn-lg btn-ink disabled:cursor-progress disabled:opacity-80"
         >
           {pending ? "Subscribing…" : "Subscribe"}
         </button>
@@ -41,7 +41,7 @@ export function NewsletterForm() {
       <p
         role="status"
         aria-live="polite"
-        className={`mt-4 min-h-6 text-sm font-semibold ${state.status === "error" ? "text-red-700" : "text-green-800"}`}
+        className={`mt-3 min-h-6 text-sm font-medium ${state.status === "error" ? "text-red-700" : "text-green-800"}`}
       >
         {state.message}
       </p>

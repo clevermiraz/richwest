@@ -1,11 +1,11 @@
-import { CircleCheck, Clock, MapPin } from "lucide-react";
+import { Check, Phone } from "lucide-react";
 import { ContactSection } from "@/components/sections/contact-section";
 import { PageHero } from "@/components/sections/page-hero";
-import { WhatsAppIcon } from "@/components/ui/icons";
 import { JsonLd } from "@/components/seo/json-ld";
+import { WhatsAppIcon } from "@/components/ui/icons";
 import { breadcrumbSchema, contactPageEntity, webPageSchema } from "@/lib/schema";
 import { buildMetadata } from "@/lib/seo";
-import { site } from "@/lib/site";
+import { hoursDisplay, site } from "@/lib/site";
 
 export const metadata = buildMetadata({
   title: "Contact | Free Flooring Quote",
@@ -23,7 +23,7 @@ const MAP_EMBED =
 
 export default function ContactPage() {
   return (
-    <div className="pt-(--header-offset)">
+    <>
       <JsonLd
         data={[
           webPageSchema("ContactPage", "Contact Richwest Integrated", "/contact", contactPageEntity),
@@ -34,92 +34,92 @@ export default function ContactPage() {
         ]}
       />
 
-      <PageHero title="Contact Us" intro="Have a question or ready to get a quote? Reach out to our team today." />
+      <PageHero
+        breadcrumbs={[{ name: "Home", href: "/" }, { name: "Contact" }]}
+        kicker="Free quote · Free on-site measurement"
+        title={
+          <>
+            Contact <em className="text-timber">us</em>
+          </>
+        }
+        intro="Have a question or ready to get a quote? Reach out to our team today. WhatsApp is the fastest way to reach us."
+      >
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+          <a
+            href={whatsappHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-track="whatsapp_click"
+            data-section="contact_page_cta"
+            className="btn btn-lg btn-wa"
+          >
+            <WhatsAppIcon size={20} />
+            Chat on WhatsApp
+            <span className="sr-only">(opens in a new tab)</span>
+          </a>
+          <a
+            href={`tel:${site.phone.e164}`}
+            data-track="quote_click"
+            data-section="contact_page_call"
+            className="btn btn-lg btn-outline tabular-nums"
+          >
+            <Phone size={18} aria-hidden="true" />
+            {site.phone.display}
+          </a>
+        </div>
+        <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-[0.9375rem] text-ink-2">
+          {["20+ years experience", "Premium materials", "Reply within 1 hour"].map((item) => (
+            <li key={item} className="flex items-center gap-2">
+              <Check size={16} aria-hidden="true" className="text-timber" />
+              {item}
+            </li>
+          ))}
+        </ul>
+      </PageHero>
 
-      <section className="bg-slate-950 px-4 py-16 md:py-24">
-        <div className="mx-auto max-w-3xl rounded-5xl border border-white/15 bg-white/5 px-6 py-12 text-center shadow-2xl sm:px-10 sm:py-16">
-          <p className="mb-6 inline-flex items-center gap-2 rounded-full border border-wa/70 px-4 py-1.5 text-xs font-bold tracking-widest text-wa uppercase">
-            <Clock size={14} aria-hidden="true" />
-            Get a quote on WhatsApp
-          </p>
-          <h2 className="heading-section mb-4 text-white">
-            Professional <span className="text-wa">Flooring Experts</span>
-            <br /> Available Now
-          </h2>
-          <p className="mx-auto mb-8 max-w-2xl text-base leading-relaxed text-slate-300 sm:text-lg">
-            Wooden Floor, Timber Decking, Composite Timber Decking, Wooden Deck Varnish, and Outdoor Deck services. Chat
-            with us now for a free consultation.
-          </p>
-          <ul className="mb-10 flex flex-wrap justify-center gap-x-6 gap-y-3 text-sm text-slate-200">
-            {["20+ Years Experience", "Premium Materials", "Reply Within 1 Hour"].map((item) => (
-              <li key={item} className="flex items-center gap-2">
-                <CircleCheck size={16} aria-hidden="true" className="text-wa" />
-                {item}
-              </li>
-            ))}
-          </ul>
-          <div className="flex flex-col items-center gap-4">
-            <a
-              href={whatsappHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              data-track="whatsapp_click"
-              data-section="contact_page_cta"
-              className="btn btn-lg bg-wa text-wa-ink hover:brightness-95"
-            >
-              <WhatsAppIcon size={22} />
-              Chat on WhatsApp
+      <ContactSection
+        title={
+          <>
+            Send us the <em className="text-timber">details.</em>
+          </>
+        }
+        intro="Prefer to write it down? Share the area, the floor you have in mind and your timeline. We will come back with next steps and a time for a free site visit."
+      />
+
+      <section aria-labelledby="office-heading" className="py-20 md:py-28">
+        <div className="container-page grid gap-10 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <p className="kicker">Visit by appointment</p>
+            <h2 id="office-heading" className="display-2">
+              Our office
+            </h2>
+            <address className="mt-6 text-lg text-ink-2 not-italic">{site.address.full}</address>
+            <a href={site.address.mapsUrl} target="_blank" rel="noopener noreferrer" className="link mt-3 inline-block">
+              Open in Google Maps
+              <span className="sr-only"> (opens in a new tab)</span>
             </a>
-            <a
-              href={`tel:${site.phone.e164}`}
-              className="text-sm font-semibold text-slate-200 underline decoration-2 underline-offset-4 transition-colors hover:text-white"
-            >
-              Or call {site.phone.display}
-            </a>
+            <h3 className="mt-10 mb-3 text-sm font-medium text-ink-3">Business hours</h3>
+            <dl className="max-w-xs space-y-1.5">
+              {hoursDisplay.map((h) => (
+                <div key={h.label} className="flex justify-between gap-4 border-b border-line pb-1.5">
+                  <dt className="text-ink-2">{h.label}</dt>
+                  <dd className="text-ink tabular-nums">{h.value}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+          <div className="relative min-h-[360px] overflow-hidden rounded-lg bg-paper-2 lg:col-span-8 lg:min-h-[480px]">
+            <iframe
+              title="Richwest Integrated location at 43J Paya Lebar Crescent, Singapore 536108"
+              src={MAP_EMBED}
+              className="absolute inset-0 h-full w-full border-0 grayscale-[0.4]"
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
           </div>
         </div>
       </section>
-
-      <ContactSection />
-
-      <section className="bg-slate-50 py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
-            <div className="rounded-4xl border border-slate-100 bg-white p-10 shadow-sm">
-              <h2 className="mb-8 text-2xl font-bold text-slate-900">Our Office</h2>
-              <div className="space-y-8">
-                <div className="flex items-start gap-4">
-                  <MapPin size={24} aria-hidden="true" className="shrink-0 text-wood-ink" />
-                  <div>
-                    <h3 className="mb-1 font-bold text-slate-900">Address</h3>
-                    <address className="text-slate-600 not-italic">{site.address.full}</address>
-                    <p className="mt-1 text-sm text-slate-600">(Visit by appointment only)</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4">
-                  <Clock size={24} aria-hidden="true" className="shrink-0 text-wood-ink" />
-                  <div>
-                    <h3 className="mb-1 font-bold text-slate-900">Business Hours</h3>
-                    <p className="text-slate-600">Mon - Fri: 9:00 AM - 6:00 PM</p>
-                    <p className="text-slate-600">Sat: 9:00 AM - 1:00 PM</p>
-                    <p className="text-slate-600">Sun &amp; PH: Closed</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="relative h-[400px] overflow-hidden rounded-4xl bg-slate-200">
-              <iframe
-                title="Richwest Integrated location at 43J Paya Lebar Crescent, Singapore 536108"
-                src={MAP_EMBED}
-                className="h-full w-full border-0"
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
+    </>
   );
 }

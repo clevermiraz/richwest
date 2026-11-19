@@ -1,10 +1,9 @@
 import { ContactSection } from "@/components/sections/contact-section";
-import { Expertise } from "@/components/sections/expertise";
 import { HomeHero } from "@/components/sections/home-hero";
 import { LatestPosts } from "@/components/sections/latest-posts";
 import { PortfolioGrid } from "@/components/sections/portfolio-grid";
 import { ProcessSteps } from "@/components/sections/process-steps";
-import { StatsBar } from "@/components/sections/stats-bar";
+import { ServicesIndex } from "@/components/sections/services-index";
 import { Testimonials } from "@/components/sections/testimonials";
 import { buildMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
@@ -21,8 +20,7 @@ export default function HomePage() {
   return (
     <>
       <HomeHero />
-      <StatsBar />
-      <Expertise />
+      <ServicesIndex />
       <PortfolioGrid />
       <ProcessSteps />
       <Testimonials />

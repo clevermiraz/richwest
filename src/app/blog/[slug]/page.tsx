@@ -1,13 +1,17 @@
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Breadcrumbs } from "@/components/ui/breadcrumbs";
-import { SiteImage } from "@/components/ui/site-image";
 import { JsonLd } from "@/components/seo/json-ld";
+import { Breadcrumbs } from "@/components/ui/breadcrumbs";
+import { PostCard } from "@/components/ui/post-card";
+import { SiteImage } from "@/components/ui/site-image";
 import { getPost, posts } from "@/content/posts";
 import { services } from "@/content/services";
+import { formatDate } from "@/lib/format";
 import { articleSchema, breadcrumbSchema } from "@/lib/schema";
 import { buildMetadata } from "@/lib/seo";
+import { site } from "@/lib/site";
 
 export function generateStaticParams() {
   return posts.map((p) => ({ slug: p.slug }));
@@ -29,21 +33,15 @@ export async function generateMetadata({ params }: PageProps<"/blog/[slug]">): P
   });
 }
 
-const dateFormatter = new Intl.DateTimeFormat("en-SG", {
-  year: "numeric",
-  month: "short",
-  day: "2-digit",
-  timeZone: "Asia/Singapore",
-});
-
 export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">) {
   const post = getPost((await params).slug);
   if (!post) notFound();
 
   const relatedServices = services.filter((s) => post.keywords.includes(s.primaryKeyword)).slice(0, 8);
+  const morePosts = posts.filter((p) => p.slug !== post.slug).slice(0, 3);
 
   return (
-    <div className="pt-(--header-offset)">
+    <>
       <JsonLd
         data={[
           articleSchema(post),
@@ -55,82 +53,113 @@ export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">
         ]}
       />
 
-      <article className="bg-white">
-        <header className="relative overflow-hidden bg-slate-950 text-white">
-          <div className="absolute inset-0 opacity-25">
-            <SiteImage
-              src={post.image}
-              altFallback={post.title}
-              priority
-              sizes="100vw"
-              className="h-full w-full object-cover"
-            />
-          </div>
-          <div className="relative z-10 mx-auto max-w-4xl animate-fade-up px-4 py-20 sm:px-6 lg:px-8">
+      <article>
+        <header className="pt-(--header-offset)">
+          <div className="container-page pt-8 md:pt-12">
             <Breadcrumbs
-              tone="light"
-              items={[{ name: "Home", href: "/" }, { name: "Blog", href: "/blog" }, { name: post.title }]}
+              items={[{ name: "Home", href: "/" }, { name: "Journal", href: "/blog" }, { name: post.title }]}
             />
-            <p className="mb-5 text-xs font-black tracking-[0.3em] text-wood-light uppercase">
-              {post.keywords[0] ?? "Flooring & Decking"}
-            </p>
-            <h1 className="heading-page mb-6">{post.title}</h1>
-            <p className="font-semibold text-white/70">
-              <time dateTime={post.dateISO}>{dateFormatter.format(new Date(post.dateISO))}</time>
-              <span className="mx-3" aria-hidden="true">
-                •
-              </span>
-              <span>{post.readTime}</span>
-              <span className="mx-3" aria-hidden="true">
-                •
-              </span>
-              <span>{post.author}</span>
-            </p>
+            <div className="intro max-w-4xl">
+              <p className="kicker capitalize">{post.keywords[0] ?? "Flooring & decking"}</p>
+              <h1 className="display-2 text-ink" style={{ "--d": 1 } as React.CSSProperties}>
+                {post.title}
+              </h1>
+              <p
+                className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.9375rem] text-ink-3"
+                style={{ "--d": 2 } as React.CSSProperties}
+              >
+                <span>By {post.author}</span>
+                <span aria-hidden="true">·</span>
+                <time dateTime={post.dateISO}>{formatDate(post.dateISO)}</time>
+                <span aria-hidden="true">·</span>
+                <span>{post.readTime}</span>
+              </p>
+            </div>
+          </div>
+          <div className="container-page mt-10 md:mt-14">
+            <div className="unveil relative aspect-[16/10] overflow-hidden rounded-lg bg-paper-2 md:aspect-[21/9]">
+              <SiteImage
+                src={post.image}
+                altFallback={post.title}
+                priority
+                fill
+                sizes="(max-width: 1344px) 100vw, 1344px"
+                className="object-cover"
+              />
+            </div>
           </div>
         </header>
 
-        <div className="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
-          <div className="space-y-6">
-            <p className="text-xl leading-relaxed text-slate-700">{post.excerpt}</p>
+        <div className="container-page grid gap-14 py-14 md:py-20 lg:grid-cols-12">
+          <div className="prose-rw lg:col-span-7 lg:col-start-2">
+            <p className="text-xl leading-relaxed text-ink">{post.excerpt}</p>
             {post.content.map((paragraph) => (
-              <p key={paragraph} className="text-lg leading-relaxed text-slate-700">
-                {paragraph}
-              </p>
+              <p key={paragraph}>{paragraph}</p>
             ))}
           </div>
 
-          {relatedServices.length > 0 && (
-            <aside className="mt-14 border-t border-slate-100 pt-10" aria-labelledby="related-services">
-              <h2 id="related-services" className="mb-4 text-sm font-black tracking-widest text-slate-900 uppercase">
-                Related services
-              </h2>
-              <ul className="flex flex-wrap gap-2">
-                {relatedServices.map((s) => (
-                  <li key={s.slug}>
-                    <Link href={`/services/${s.slug}`} className="chip inline-block">
-                      {s.primaryKeyword}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </aside>
-          )}
+          <aside className="lg:col-span-3 lg:col-start-10" aria-label="Get help with this">
+            <div className="space-y-8 lg:sticky lg:top-[calc(var(--header-offset)+2rem)]">
+              <div className="rounded-xl border border-line bg-white p-6">
+                <p className="display-3 text-[1.625rem] text-ink">Planning a project?</p>
+                <p className="mt-2 text-[0.9375rem] text-ink-2">
+                  Free on-site measurement and an itemised quote. {site.replyPromise}.
+                </p>
+                <Link
+                  href="/contact"
+                  className="btn btn-primary mt-5 w-full"
+                  data-track="quote_click"
+                  data-section="blog_post_get_quote"
+                >
+                  Get a free quote
+                </Link>
+              </div>
+              {relatedServices.length > 0 && (
+                <div>
+                  <h2 className="mb-3 text-sm font-medium text-ink-3">Related services</h2>
+                  <ul className="flex flex-wrap gap-2">
+                    {relatedServices.map((s) => (
+                      <li key={s.slug}>
+                        <Link href={`/services/${s.slug}`} className="chip capitalize">
+                          {s.primaryKeyword}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          </aside>
+        </div>
 
-          <div className="mt-14 flex flex-col items-start justify-between gap-4 border-t border-slate-100 pt-10 sm:flex-row sm:items-center">
-            <Link href="/blog" className="font-bold text-slate-700 transition-colors hover:text-wood-ink">
-              Back to Blog
-            </Link>
-            <Link
-              href="/contact"
-              className="btn btn-primary"
-              data-track="quote_click"
-              data-section="blog_post_get_quote"
-            >
-              Get a quote
+        <div className="container-page">
+          <div className="flex border-t border-line py-8 lg:mx-[calc(100%/12)]">
+            <Link href="/blog" className="group inline-flex items-center gap-2 font-medium text-ink">
+              <ArrowLeft size={16} aria-hidden="true" className="transition-transform group-hover:-translate-x-0.5" />
+              Back to the journal
             </Link>
           </div>
         </div>
       </article>
-    </div>
+
+      <section aria-labelledby="more-heading" className="border-t border-line bg-paper-2 py-16 md:py-24">
+        <div className="container-page">
+          <div className="mb-10 flex items-end justify-between gap-6">
+            <h2 id="more-heading" className="display-2">
+              Keep reading
+            </h2>
+            <Link href="/blog" className="link hidden shrink-0 items-center gap-1 sm:inline-flex">
+              All articles
+              <ArrowRight size={14} aria-hidden="true" />
+            </Link>
+          </div>
+          <div className="grid gap-x-8 gap-y-12 md:grid-cols-3">
+            {morePosts.map((p) => (
+              <PostCard key={p.id} post={p} />
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
   );
 }

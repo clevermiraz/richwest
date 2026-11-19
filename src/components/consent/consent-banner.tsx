@@ -54,19 +54,19 @@ export function ConsentBanner() {
     <div
       role="region"
       aria-label="Cookie choices"
-      className="fixed right-4 bottom-[calc(5rem+env(safe-area-inset-bottom))] left-4 z-45 animate-consent-in rounded-3xl border border-slate-200 bg-white p-5 shadow-[0_12px_40px_rgba(15,23,42,0.16)] sm:right-auto sm:bottom-6 sm:left-6 sm:w-[23rem]"
+      className="fixed right-4 bottom-[calc(5rem+env(safe-area-inset-bottom))] left-4 z-45 rounded-xl border border-line bg-white p-5 shadow-[0_1px_2px_rgb(28_25_23/0.06),0_20px_48px_-16px_rgb(28_25_23/0.3)] transition-[opacity,translate] duration-300 ease-(--ease-out) sm:right-auto sm:bottom-6 sm:left-6 sm:w-[23rem] starting:translate-y-3 starting:opacity-0"
     >
-      <p className="text-sm leading-relaxed text-slate-700">
+      <p className="text-sm leading-relaxed text-ink-2">
         {mode === "notice"
           ? "We use cookies to see how this site is used and to measure our ads. You can turn them off anytime."
           : "We use cookies for analytics and advertising. Please choose what you are happy with."}{" "}
-        <Link href="/privacy" className="font-semibold text-wood-ink underline underline-offset-2">
+        <Link href="/privacy" className="font-semibold text-timber underline underline-offset-2">
           Privacy notice
         </Link>
       </p>
 
       {expanded && (
-        <ul id="cookie-choices" className="mt-4 space-y-3 border-t border-slate-100 pt-4">
+        <ul id="cookie-choices" className="mt-4 space-y-3 border-t border-line pt-4">
           {consentCategories.map((c) => {
             const id = `consent-${c.key}`;
             const locked = "locked" in c && c.locked;
@@ -78,12 +78,12 @@ export function ConsentBanner() {
                   checked={locked ? true : choices[c.key]}
                   disabled={locked}
                   onChange={(e) => setChoices((prev) => ({ ...prev, [c.key]: e.target.checked }))}
-                  className="mt-0.5 h-4 w-4 shrink-0 rounded accent-wood-ink disabled:opacity-50"
+                  className="mt-0.5 h-4 w-4 shrink-0 rounded accent-timber disabled:opacity-50"
                 />
                 <label htmlFor={id} className="text-sm leading-snug">
-                  <span className="font-semibold text-slate-900">{c.label}</span>
-                  {locked && <span className="text-slate-600"> (always on)</span>}
-                  <span className="block text-slate-600">{c.note}</span>
+                  <span className="font-semibold text-ink">{c.label}</span>
+                  {locked && <span className="text-ink-3"> (always on)</span>}
+                  <span className="block text-ink-3">{c.note}</span>
                 </label>
               </li>
             );
@@ -95,7 +95,7 @@ export function ConsentBanner() {
         <button
           type="button"
           onClick={() => decide(expanded ? choices : ALL_GRANTED)}
-          className="flex-1 rounded-full bg-slate-900 px-4 py-2.5 text-sm font-bold text-white transition-colors hover:bg-wood-dark"
+          className="btn btn-ink min-h-11 flex-1 px-4 text-sm"
         >
           {expanded ? "Save" : mode === "notice" ? "Got it" : "Accept"}
         </button>
@@ -103,7 +103,7 @@ export function ConsentBanner() {
           <button
             type="button"
             onClick={() => decide(ONLY_NECESSARY)}
-            className="flex-1 rounded-full border border-slate-300 px-4 py-2.5 text-sm font-bold text-slate-700 transition-colors hover:border-slate-900 hover:text-slate-900"
+            className="btn btn-outline min-h-11 flex-1 px-4 text-sm"
           >
             Decline
           </button>
@@ -114,7 +114,7 @@ export function ConsentBanner() {
             onClick={() => setExpanded(true)}
             aria-expanded={false}
             aria-controls="cookie-choices"
-            className="px-3 py-2.5 text-sm font-semibold whitespace-nowrap text-slate-600 underline underline-offset-2 transition-colors hover:text-slate-900"
+            className="min-h-11 px-3 text-sm font-medium whitespace-nowrap text-ink-2 underline underline-offset-2 transition-colors hover:text-ink"
           >
             {mode === "notice" ? "Turn off" : "Choose"}
           </button>

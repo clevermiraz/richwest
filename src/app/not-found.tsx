@@ -1,3 +1,4 @@
+import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { popularServices } from "@/lib/site";
@@ -11,45 +12,45 @@ export const metadata: Metadata = {
 
 export default function NotFound() {
   return (
-    <div className="pt-(--header-offset)">
-      <section className="bg-white py-24">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-          <p className="mb-4 text-sm font-black tracking-[0.3em] text-wood-ink uppercase">Error 404</p>
-          <h1 className="mb-6 text-4xl font-black tracking-tight text-slate-900 sm:text-5xl">
-            We could not find that page
+    <section className="pt-(--header-offset)">
+      <div className="container-page grid gap-12 py-20 md:py-32 lg:grid-cols-12">
+        <div className="intro lg:col-span-7">
+          <p className="kicker">Error 404</p>
+          <h1 className="display-1 text-ink" style={{ "--d": 1 } as React.CSSProperties}>
+            We could not find <em className="text-timber">that page.</em>
           </h1>
-          <p className="mb-10 text-lg leading-relaxed text-slate-600">
-            The link may be out of date or mistyped. You can head back to the homepage, or jump straight to one of our
-            most requested services below.
+          <p className="lede mt-6 max-w-xl" style={{ "--d": 2 } as React.CSSProperties}>
+            The link may be out of date or mistyped. Head back to the homepage, or jump straight to one of our most
+            requested services.
           </p>
-          <div className="mb-12 flex flex-col gap-4 sm:flex-row">
-            <Link
-              href="/"
-              className="inline-flex items-center justify-center rounded-2xl bg-slate-900 px-8 py-4 font-bold text-white transition-colors hover:bg-wood-dark"
-            >
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row" style={{ "--d": 3 } as React.CSSProperties}>
+            <Link href="/" className="btn btn-lg btn-ink">
               Back to homepage
             </Link>
-            <Link
-              href="/contact"
-              className="inline-flex items-center justify-center rounded-2xl border-2 border-slate-200 px-8 py-4 font-bold text-slate-900 transition-colors hover:border-wood-ink hover:text-wood-ink"
-            >
+            <Link href="/contact" className="btn btn-lg btn-outline">
               Get a quote
             </Link>
           </div>
-          <div className="border-t border-slate-200 pt-8">
-            <h2 className="mb-4 text-sm font-black tracking-widest text-slate-600 uppercase">Popular services</h2>
-            <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-              {popularServices.map((s) => (
-                <li key={s.href}>
-                  <Link href={s.href} className="font-semibold text-slate-700 transition-colors hover:text-wood-ink">
-                    {s.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
         </div>
-      </section>
-    </div>
+        <nav aria-labelledby="popular-heading" className="lg:col-span-4 lg:col-start-9 lg:pt-10">
+          <h2 id="popular-heading" className="mb-2 text-sm font-medium text-ink-3">
+            Popular services
+          </h2>
+          <ul className="border-t border-line">
+            {popularServices.map((s) => (
+              <li key={s.href} className="border-b border-line">
+                <Link
+                  href={s.href}
+                  className="group flex items-center justify-between py-4 font-display text-2xl text-ink"
+                >
+                  {s.name}
+                  <ArrowRight size={18} aria-hidden="true" className="arrow text-ink-3" />
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
+    </section>
   );
 }

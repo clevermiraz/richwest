@@ -1,55 +1,73 @@
-import { cn } from "@/lib/cn";
 import { Breadcrumbs, type Crumb } from "@/components/ui/breadcrumbs";
 import { SiteImage } from "@/components/ui/site-image";
+import { cn } from "@/lib/cn";
 
 interface PageHeroProps {
   title: React.ReactNode;
   intro?: React.ReactNode;
-  eyebrow?: string;
+  /** Short context label above the title. */
+  kicker?: string;
   breadcrumbs?: readonly Crumb[];
-  /** Background photo; rendered as the page's LCP image. */
+  /** Photo shown beside the title on large screens (above the fold, so eager). */
   image?: string;
   imageAlt?: string;
-  /** Tailwind opacity class for the photo, or "overlay" for a gradient overlay. */
-  imageTreatment?: "opacity-20" | "opacity-25" | "overlay";
+  /** Caption under the photo, e.g. the material shown. */
+  caption?: string;
   className?: string;
-  introClassName?: string;
-  /** Wider side padding on large screens, as on service and process pages. */
-  wide?: boolean;
   children?: React.ReactNode;
 }
 
-/** Dark intro band with the page's single <h1>. */
+/**
+ * Light editorial intro with the page's single <h1>.
+ * Text rises in on load (transform only, so it paints in the first frame);
+ * the photo unveils with a short wipe.
+ */
 export function PageHero({
   title,
   intro,
-  eyebrow,
+  kicker,
   breadcrumbs,
   image,
   imageAlt,
-  imageTreatment = "opacity-20",
-  className = "bg-slate-900 py-24",
-  introClassName = "text-xl text-white/70",
-  wide = false,
+  caption,
+  className,
   children,
 }: PageHeroProps) {
   return (
-    <section className={cn("relative overflow-hidden text-white", className)}>
-      {image && (
-        <div className={cn("absolute inset-0", imageTreatment !== "overlay" && imageTreatment)}>
-          <SiteImage src={image} altFallback={imageAlt} priority sizes="100vw" className="h-full w-full object-cover" />
-          {imageTreatment === "overlay" && (
-            <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-950/70 to-slate-950/25" />
+    <section className={cn("border-b border-line pt-(--header-offset)", className)}>
+      <div className="container-page pt-8 pb-14 md:pt-12 md:pb-20">
+        {breadcrumbs && <Breadcrumbs items={breadcrumbs} />}
+        <div className={cn("grid gap-10 lg:gap-16", image ? "lg:grid-cols-12 lg:items-center" : "max-w-4xl")}>
+          <div className={cn("intro", image && "lg:col-span-7")}>
+            {kicker && <p className="kicker">{kicker}</p>}
+            <h1 className="display-1 text-ink" style={{ "--d": 1 } as React.CSSProperties}>
+              {title}
+            </h1>
+            {intro && (
+              <p className="lede mt-6 max-w-2xl md:mt-8" style={{ "--d": 2 } as React.CSSProperties}>
+                {intro}
+              </p>
+            )}
+            {children && (
+              <div className="mt-8 md:mt-10" style={{ "--d": 3 } as React.CSSProperties}>
+                {children}
+              </div>
+            )}
+          </div>
+          {image && (
+            <figure className="lg:col-span-5">
+              <div className="unveil relative aspect-[4/5] overflow-hidden rounded-lg bg-paper-2 sm:aspect-[4/3] lg:aspect-[4/5]">
+                <SiteImage
+                  src={image}
+                  altFallback={imageAlt}
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 40vw"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              {caption && <figcaption className="mt-3 text-sm text-ink-3">{caption}</figcaption>}
+            </figure>
           )}
-        </div>
-      )}
-      <div className={cn("relative z-10 mx-auto max-w-7xl px-4 sm:px-6", wide ? "lg:px-10" : "lg:px-8")}>
-        <div className="max-w-3xl animate-fade-up">
-          {breadcrumbs && <Breadcrumbs tone="light" items={breadcrumbs} />}
-          {eyebrow && <p className="mb-5 text-xs font-black tracking-[0.3em] text-wood-light uppercase">{eyebrow}</p>}
-          <h1 className="heading-page mb-6">{title}</h1>
-          {intro && <p className={introClassName}>{intro}</p>}
-          {children}
         </div>
       </div>
     </section>

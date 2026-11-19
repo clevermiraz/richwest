@@ -1,26 +1,19 @@
+/** Richwest mark: three stacked boards and the wordmark. */
 export function Logo({ variant = "dark", className }: { variant?: "dark" | "light"; className?: string }) {
-  const text = variant === "light" ? "#ffffff" : "#8b451c";
-  const middle = variant === "light" ? "#e8a06a" : "#8b451c";
+  const light = variant === "light";
   return (
-    <svg
-      viewBox="0 0 420 80"
-      width={420}
-      height={80}
-      className={className}
-      role="img"
-      aria-label="Richwest Integrated Pte Ltd"
-    >
-      <rect x="12" y="6" width="56" height="20" rx="10" fill="#d2ab78" />
-      <rect x="12" y="30" width="56" height="20" rx="10" fill={middle} />
-      <rect x="12" y="54" width="56" height="20" rx="10" fill="#f8f5d6" />
+    <svg viewBox="0 0 420 80" width={420} height={80} className={className} aria-hidden="true" focusable="false">
+      <rect x="12" y="6" width="56" height="20" rx="10" fill="#c9a57c" />
+      <rect x="12" y="30" width="56" height="20" rx="10" fill={light ? "#e0a46a" : "#9a5418"} />
+      <rect x="12" y="54" width="56" height="20" rx="10" fill={light ? "#f6f2ec" : "#1c1917"} />
       <text
-        x="100"
-        y="52"
-        fill={text}
-        fontFamily='Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif'
+        x="96"
+        y="53"
+        fill={light ? "#f6f2ec" : "#1c1917"}
+        fontFamily='var(--font-grotesk), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif'
         fontSize="36"
-        fontWeight="900"
-        letterSpacing="4"
+        fontWeight="800"
+        letterSpacing="5"
       >
         RICHWEST
       </text>

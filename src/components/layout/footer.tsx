@@ -1,11 +1,10 @@
-import { Mail, MapPin, Phone } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { cacheLife } from "next/cache";
 import Link from "next/link";
 import { CookieSettingsButton } from "@/components/consent/cookie-settings-button";
-import { GoogleReviewsLink } from "@/components/ui/google-reviews-link";
-import { FacebookIcon, InstagramIcon } from "@/components/ui/icons";
+import { FacebookIcon, GoogleIcon, InstagramIcon, WhatsAppIcon } from "@/components/ui/icons";
 import { Logo } from "@/components/ui/logo";
-import { footerQuickLinks, footerServiceLinks, site } from "@/lib/site";
+import { companyLinks, hoursDisplay, serviceGroups, site } from "@/lib/site";
 
 /** Cached so the year is computed once per deployment, keeping pages static. */
 async function getCopyrightYear() {
@@ -14,111 +13,159 @@ async function getCopyrightYear() {
   return new Date().getFullYear();
 }
 
-const socialClass =
-  "flex h-11 w-11 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-wood-accent/40";
+const linkClass = "text-paper/75 transition-colors hover:text-paper";
+const headingClass = "mb-4 text-sm font-medium text-oak";
 
 export async function Footer() {
   const year = await getCopyrightYear();
+  const whatsappHref = `${site.whatsapp}?text=${encodeURIComponent("Hi Richwest, I'd like a quote for my floor.")}`;
 
   return (
-    <footer className="bg-slate-900 pt-12 pb-28 text-white md:pt-20 md:pb-10">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-10 grid grid-cols-2 gap-x-6 gap-y-10 md:mb-16 md:gap-12 lg:grid-cols-4">
-          <div className="col-span-2 lg:col-span-1">
-            <div className="mb-5 md:mb-6">
-              <Logo variant="light" className="h-10 w-auto" />
-            </div>
-            <p className="mb-6 leading-relaxed text-slate-300 md:mb-8">
-              Flooring contractor Singapore homeowners and businesses trust for wooden floor, vinyl flooring, carpet
-              floor, sports floor, outdoor deck, and composite deck projects.
+    <footer className="on-dark bg-night grain pb-28 text-paper sm:pb-12">
+      <div className="container-page">
+        {/* Closing call to action */}
+        <div className="flex flex-col gap-8 border-b border-line-dark py-16 md:py-24 lg:flex-row lg:items-end lg:justify-between">
+          <div className="max-w-3xl">
+            <p className="kicker">Free on-site consultation</p>
+            <p className="display-2" data-reveal="">
+              Let&rsquo;s talk about <em className="text-oak">your floor.</em>
             </p>
-            <div className="flex gap-4">
+          </div>
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <a
+              href={whatsappHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-track="whatsapp_click"
+              data-section="footer_cta"
+              className="btn btn-lg btn-wa"
+            >
+              <WhatsAppIcon size={20} />
+              WhatsApp us
+              <span className="sr-only">(opens in a new tab)</span>
+            </a>
+            <Link
+              href="/contact"
+              data-track="quote_click"
+              data-section="footer_cta"
+              className="btn btn-lg btn-outline-light"
+            >
+              Request a quote
+            </Link>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-x-6 gap-y-12 py-14 md:grid-cols-12 md:gap-x-10">
+          <div className="col-span-2 md:col-span-3">
+            <Link href="/" className="inline-block" translate="no">
+              <Logo variant="light" className="h-9 w-auto" />
+              <span className="sr-only">Richwest Integrated, home</span>
+            </Link>
+            <p className="mt-5 max-w-sm text-paper/75">
+              Flooring and decking contractor in Singapore since {site.foundedYear}. Wooden floors, vinyl, carpet,
+              sports floors and outdoor decks, installed by our own team.
+            </p>
+            <div className="mt-6 flex items-center gap-2">
               <a
                 href={site.social.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Richwest Integrated on Instagram"
-                className={socialClass}
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-line-dark text-paper/80 transition-colors hover:border-paper/40 hover:text-paper"
               >
                 <InstagramIcon />
+                <span className="sr-only">Richwest Integrated on Instagram (opens in a new tab)</span>
               </a>
               <a
                 href={site.social.facebook}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Richwest Integrated on Facebook"
-                className={socialClass}
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-line-dark text-paper/80 transition-colors hover:border-paper/40 hover:text-paper"
               >
                 <FacebookIcon />
+                <span className="sr-only">Richwest Integrated on Facebook (opens in a new tab)</span>
+              </a>
+              <a
+                href={site.googleReviews}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-track="section_click"
+                data-section="google_reviews_footer"
+                className="ml-1 inline-flex h-11 items-center gap-2 rounded-full border border-line-dark px-4 text-sm text-paper/80 transition-colors hover:border-paper/40 hover:text-paper"
+              >
+                <GoogleIcon size={16} />
+                Google reviews
+                <ArrowUpRight size={14} aria-hidden="true" />
+                <span className="sr-only">(opens in a new tab)</span>
               </a>
             </div>
-            <GoogleReviewsLink section="footer" tone="dark" className="mt-5" label="Our Google reviews" />
           </div>
 
-          <nav aria-labelledby="footer-quick-access">
-            <h2 id="footer-quick-access" className="mb-2 text-base font-bold md:mb-8 md:text-lg">
-              Quick Access
-            </h2>
-            <ul className="md:space-y-4">
-              {footerQuickLinks.map((l) => (
-                <li key={l.href}>
-                  <Link href={l.href} className="text-slate-300 transition-colors hover:text-wood-light">
-                    {l.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-
-          <nav aria-labelledby="footer-services">
-            <h2 id="footer-services" className="mb-2 text-base font-bold md:mb-8 md:text-lg">
-              Our Services
-            </h2>
-            <ul className="md:space-y-4">
-              {footerServiceLinks.map((l) => (
-                <li key={l.href}>
-                  <Link href={l.href} className="text-slate-300 transition-colors hover:text-wood-light">
-                    {l.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-
-          <div className="col-span-2 sm:col-span-1">
-            <h2 className="mb-3 text-base font-bold md:mb-8 md:text-lg">Get In Touch</h2>
-            <address className="not-italic">
-              <ul className="space-y-2 md:space-y-6">
-                <li className="flex items-center gap-4 md:items-start">
-                  <Phone size={20} aria-hidden="true" className="shrink-0 text-wood-accent md:mt-0.5" />
-                  <a href={`tel:${site.phone.e164}`} className="text-slate-300 transition-colors hover:text-white">
-                    {site.phone.display}
-                  </a>
-                </li>
-                <li className="flex items-center gap-4 md:items-start">
-                  <Mail size={20} aria-hidden="true" className="shrink-0 text-wood-accent md:mt-0.5" />
-                  <a href={`mailto:${site.email}`} className="text-slate-300 transition-colors hover:text-white">
-                    {site.email}
-                  </a>
-                </li>
-                <li className="flex items-start gap-4 pt-2 md:pt-0">
-                  <MapPin size={20} aria-hidden="true" className="mt-0.5 shrink-0 text-wood-accent md:mt-0" />
-                  <span className="text-slate-300">{site.address.full}</span>
-                </li>
+          {serviceGroups.slice(0, 2).map((group) => (
+            <nav key={group.name} aria-labelledby={`footer-${group.name}`} className="md:col-span-2">
+              <h2 id={`footer-${group.name}`} className={headingClass}>
+                {group.name}
+              </h2>
+              <ul className="space-y-1">
+                {group.items.map((l) => (
+                  <li key={l.href}>
+                    <Link href={l.href} className={`${linkClass} inline-block py-1`}>
+                      {l.name}
+                    </Link>
+                  </li>
+                ))}
               </ul>
+            </nav>
+          ))}
+
+          <nav aria-labelledby="footer-company" className="md:col-span-2">
+            <h2 id="footer-company" className={headingClass}>
+              Company
+            </h2>
+            <ul className="space-y-1">
+              {[...companyLinks, ...serviceGroups[2].items].map((l) => (
+                <li key={l.href}>
+                  <Link href={l.href} className={`${linkClass} inline-block py-1`}>
+                    {l.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <div className="col-span-2 md:col-span-3">
+            <h2 className={headingClass}>Contact</h2>
+            <address className="space-y-3 not-italic">
+              <a href={`tel:${site.phone.e164}`} className={`${linkClass} block tabular-nums`}>
+                {site.phone.display}
+              </a>
+              <a href={`mailto:${site.email}`} className={`${linkClass} block break-all`}>
+                {site.email}
+              </a>
+              <a href={site.address.mapsUrl} target="_blank" rel="noopener noreferrer" className={`${linkClass} block`}>
+                {site.address.full}
+                <span className="sr-only"> (opens Google Maps in a new tab)</span>
+              </a>
             </address>
+            <dl className="mt-5 space-y-1 text-sm">
+              {hoursDisplay.map((h) => (
+                <div key={h.label} className="flex justify-between gap-4">
+                  <dt className="whitespace-nowrap text-paper/60">{h.label}</dt>
+                  <dd className="whitespace-nowrap text-paper/80 tabular-nums">{h.value}</dd>
+                </div>
+              ))}
+            </dl>
           </div>
         </div>
 
-        <div className="flex flex-col-reverse items-center justify-between gap-3 border-t border-white/15 pt-6 md:flex-row md:gap-6 md:pt-10">
-          <p className="text-center text-xs text-slate-400 md:text-left md:text-sm">
+        <div className="flex flex-col-reverse gap-4 border-t border-line-dark pt-6 text-sm text-paper/60 md:flex-row md:items-center md:justify-between">
+          <p>
             © {year} {site.legalName} All rights reserved.
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-x-6 text-sm text-slate-400">
-            <Link href="/privacy" className="transition-colors hover:text-white">
-              Privacy &amp; Cookies
+          <div className="flex flex-wrap items-center gap-x-6">
+            <Link href="/privacy" className="inline-flex min-h-11 items-center transition-colors hover:text-paper">
+              Privacy &amp; cookies
             </Link>
-            <CookieSettingsButton className="min-h-[44px] underline decoration-dotted underline-offset-4 transition-colors hover:text-white md:min-h-0">
+            <CookieSettingsButton className="inline-flex min-h-11 items-center transition-colors hover:text-paper">
               Cookie settings
             </CookieSettingsButton>
           </div>

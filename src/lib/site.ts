@@ -7,7 +7,7 @@ export const site = {
   legalName: "Richwest Integrated (Pte.) Ltd.",
   url: (process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.richwestipl.sg").replace(/\/$/, ""),
   locale: "en_SG",
-  themeColor: "#0f172a",
+  themeColor: "#f6f2ec",
   description:
     "Get reliable flooring solutions in Singapore from Richwest Integrated. Quality flooring services for residential and commercial spaces. Contact us today!",
   phone: {
@@ -47,32 +47,73 @@ export const site = {
 
 export const absoluteUrl = (path = "/") => `${site.url}${path.startsWith("/") ? path : `/${path}`}`;
 
+/**
+ * Primary navigation, kept to four destinations plus the quote CTA.
+ * Process and FAQ stay live (they rank) and are linked from About, service
+ * pages and the footer instead of the header.
+ */
 export const mainNav = [
+  { name: "Services", href: "/services" },
+  { name: "Projects", href: "/portfolio" },
   { name: "About", href: "/about" },
-  { name: "Services", href: "/services" },
-  { name: "Portfolio", href: "/portfolio" },
-  { name: "Process", href: "/process" },
-  { name: "Blog", href: "/blog" },
-  { name: "FAQ", href: "/faq" },
-  { name: "Contact", href: "/contact" },
+  { name: "Journal", href: "/blog" },
 ] as const;
 
-export const footerQuickLinks = [
-  { name: "About Us", href: "/about" },
-  { name: "Services", href: "/services" },
-  { name: "Portfolio", href: "/portfolio" },
-  { name: "FAQ", href: "/faq" },
-  { name: "Blog", href: "/blog" },
-  { name: "Contact", href: "/contact" },
-] as const;
+export interface NavLink {
+  name: string;
+  href: string;
+}
 
-export const footerServiceLinks = [
-  { name: "Wooden Floor", href: "/services/wooden-floor" },
-  { name: "Vinyl Flooring", href: "/services/vinyl-flooring" },
-  { name: "Composite Deck", href: "/services/composite-deck" },
-  { name: "Wooden Deck Varnish", href: "/services/wooden-deck-varnish" },
-  { name: "Office Carpet Tiles", href: "/services/carpet-floor" },
-  { name: "Polycarbonate Shelters", href: "/services/polycarbonate-roofing-shelters" },
+export interface ServiceGroup {
+  name: string;
+  blurb: string;
+  items: readonly NavLink[];
+}
+
+/** Services grouped for the header menu, the services index and the footer. */
+export const serviceGroups: readonly ServiceGroup[] = [
+  {
+    name: "Flooring",
+    blurb: "Timber, vinyl, carpet and sports systems for homes and workplaces.",
+    items: [
+      { name: "Wooden Floor", href: "/services/wooden-floor" },
+      { name: "Parquet Flooring", href: "/services/parquet-flooring" },
+      { name: "Vinyl Flooring", href: "/services/vinyl-flooring" },
+      { name: "Carpet & Office Carpet Tiles", href: "/services/carpet-floor" },
+      { name: "Sports Floor", href: "/services/sports-floor" },
+      { name: "Sand and Varnish", href: "/services/sand-and-varnish" },
+      { name: "Commercial Flooring", href: "/services/commercial-flooring-contractor" },
+    ],
+  },
+  {
+    name: "Decking & Outdoor",
+    blurb: "Balconies, pool decks and rooftops built for Singapore weather.",
+    items: [
+      { name: "Wooden Deck", href: "/services/wooden-deck" },
+      { name: "Composite Deck", href: "/services/composite-deck" },
+      { name: "Composite & Timber Decking", href: "/services/composite-timber-deck" },
+      { name: "Balcony Decking", href: "/services/balcony-decking-specialist" },
+      { name: "Wooden Deck Varnish", href: "/services/wooden-deck-varnish" },
+      { name: "Polycarbonate Roof Shelters", href: "/services/polycarbonate-roofing-shelters" },
+    ],
+  },
+  {
+    name: "Renovation",
+    blurb: "Supporting works so your new floor goes down on a sound base.",
+    items: [
+      { name: "Home Renovation", href: "/services/home-renovation" },
+      { name: "Waterproofing", href: "/services/waterproofing-services" },
+    ],
+  },
+];
+
+export const companyLinks = [
+  { name: "About us", href: "/about" },
+  { name: "Our process", href: "/process" },
+  { name: "Projects", href: "/portfolio" },
+  { name: "Journal", href: "/blog" },
+  { name: "FAQs", href: "/faq" },
+  { name: "Contact", href: "/contact" },
 ] as const;
 
 export const popularServices = [
@@ -80,6 +121,13 @@ export const popularServices = [
   { name: "Vinyl Flooring", href: "/services/vinyl-flooring" },
   { name: "Composite Deck", href: "/services/composite-deck" },
   { name: "Office Carpet Tiles", href: "/services/carpet-floor" },
+] as const;
+
+/** Business hours as shown to people (structured data uses `site.hours`). */
+export const hoursDisplay = [
+  { label: "Mon – Fri", value: "9:00 am – 6:00 pm" },
+  { label: "Saturday", value: "9:00 am – 1:00 pm" },
+  { label: "Sun & PH", value: "Closed" },
 ] as const;
 
 /** Keywords shared by every service page, appended after the page's own keyword. */

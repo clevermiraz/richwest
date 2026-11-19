@@ -1,62 +1,113 @@
-import { ArrowRight, Clock } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Link from "next/link";
+import type { CSSProperties } from "react";
+import { WhatsAppIcon } from "@/components/ui/icons";
 import { SiteImage } from "@/components/ui/site-image";
-import { hero } from "@/content/home";
+import { hero, stats } from "@/content/home";
 import { site } from "@/lib/site";
 
-export function HomeHero() {
-  return (
-    <section className="relative flex h-[100svh] min-h-[600px] items-center overflow-hidden bg-slate-950 md:min-h-[700px]">
-      <div className="absolute inset-0 z-0">
-        <SiteImage src={hero.backgroundImageUrl} priority sizes="100vw" className="h-full w-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/85 via-slate-950/45 to-slate-950/5" />
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/30 via-transparent to-slate-950/80" />
-      </div>
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-0 opacity-[0.04]"
-        style={{ backgroundImage: "radial-gradient(circle, #fff 1px, transparent 1px)", backgroundSize: "60px 60px" }}
-      />
+const d = (n: number) => ({ "--d": n }) as CSSProperties;
 
-      <div className="relative z-10 mx-auto w-full max-w-7xl px-5 pt-20 sm:px-6 md:pt-0 lg:px-10">
-        <div className="max-w-4xl">
-          <h1 className="mb-5 text-3xl leading-[1.05] font-extrabold tracking-tight text-balance text-white sm:text-4xl md:mb-10 md:text-5xl lg:text-7xl">
-            {hero.headline}
+/**
+ * First screen. Editorial split: headline and actions on the left, a tall
+ * photograph with a detail inset on the right. Motion is a single load
+ * sequence (text rises, photo unveils, inset follows) that runs once.
+ */
+export function HomeHero() {
+  const whatsappHref = `${site.whatsapp}?text=${encodeURIComponent("Hi Richwest, I'd like a quote for my floor.")}`;
+
+  return (
+    <section className="relative pt-(--header-offset)">
+      <div className="container-page grid gap-12 pt-10 pb-16 md:pt-16 lg:grid-cols-12 lg:gap-10 lg:pt-14 lg:pb-24">
+        <div className="intro flex flex-col justify-center lg:col-span-7 lg:pr-6">
+          <p className="kicker" style={d(0)}>
+            Flooring &amp; decking contractor · Singapore since {site.foundedYear}
+          </p>
+          <h1 className="display-1 text-ink" style={d(1)}>
+            Your premium <em className="text-timber">flooring partner</em> in Singapore.
           </h1>
-          <p className="mb-8 max-w-2xl text-base leading-relaxed font-medium text-white/75 sm:text-lg md:mb-14 md:text-xl lg:text-2xl">
+          <p className="lede mt-7 max-w-xl" style={d(2)}>
             {hero.subheadline}
           </p>
-          <div className="flex flex-col gap-3 sm:flex-row">
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row" style={d(3)}>
             <Link
               href="/contact"
-              className="group btn btn-lg btn-primary"
+              className="btn btn-lg btn-primary"
               data-track="section_click quote_click"
               data-section="home_hero_get_quote"
             >
-              Get a quote
-              <ArrowRight size={18} aria-hidden="true" className="transition-transform group-hover:translate-x-0.5" />
+              Get a free quote
+              <ArrowRight size={18} aria-hidden="true" className="arrow" />
             </Link>
-            <Link
-              href="/portfolio"
-              className="btn btn-lg btn-outline-light"
-              data-track="section_click"
-              data-section="hero_portfolio_cta"
+            <a
+              href={whatsappHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-lg btn-outline"
+              data-track="whatsapp_click"
+              data-section="home_hero_whatsapp"
             >
-              View our work
-            </Link>
+              <WhatsAppIcon size={18} />
+              WhatsApp us
+              <span className="sr-only">(opens in a new tab)</span>
+            </a>
           </div>
-          <p className="mt-5 flex items-center gap-2 text-sm font-medium text-white/80 md:mt-6 md:text-base">
-            <Clock size={16} aria-hidden="true" className="shrink-0 text-wood-light" />
-            Free quotation · {site.replyPromise}
+          <p className="mt-6 text-sm text-ink-3" style={d(4)}>
+            {site.replyPromise} · Free on-site measurement and samples
           </p>
         </div>
+
+        <figure className="lg:col-span-5 lg:self-center">
+          <div className="relative">
+            <div className="unveil relative aspect-[4/3] overflow-hidden rounded-lg bg-paper-2 sm:aspect-[16/11] lg:aspect-[4/5]">
+              <SiteImage
+                src={hero.backgroundImageUrl}
+                priority
+                sizes="(max-width: 1024px) 100vw, 42vw"
+                className="h-full w-full object-cover"
+              />
+            </div>
+
+            {/* Detail inset: a second material, overlapping the main photo's edge. */}
+            <div
+              aria-hidden="true"
+              className="unveil absolute bottom-10 -left-14 hidden w-[36%] overflow-hidden rounded-md border-[6px] border-paper shadow-[0_24px_48px_-20px_rgb(28_25_23/0.45)] lg:block"
+              style={{ animationDelay: "350ms" }}
+            >
+              <div className="aspect-square">
+                <SiteImage
+                  src="/images/wooden-floor-herringbone.webp"
+                  alt=""
+                  sizes="16vw"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+            </div>
+          </div>
+          <figcaption className="mt-3 flex items-center justify-between gap-4 text-sm text-ink-3">
+            <span>Engineered oak, residential hallway</span>
+            <span className="shrink-0 tabular-nums">01 / Wooden floor</span>
+          </figcaption>
+        </figure>
       </div>
 
-      <div
-        aria-hidden="true"
-        className="absolute bottom-8 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-2 opacity-40 md:flex"
-      >
-        <div className="h-10 w-px animate-pulse bg-white" />
+      {/* Proof strip */}
+      <div className="border-y border-line">
+        <dl className="container-page grid grid-cols-2 lg:grid-cols-4">
+          {stats.map((stat, i) => (
+            <div
+              key={stat.label}
+              data-reveal=""
+              style={{ "--i": i } as CSSProperties}
+              className="flex flex-col-reverse gap-1 border-line py-6 odd:pr-4 even:border-l even:pl-5 md:py-8 lg:border-l lg:px-8 lg:first:border-l-0 lg:first:pl-0 [&:nth-child(n+3)]:border-t lg:[&:nth-child(n+3)]:border-t-0"
+            >
+              <dt className="text-sm text-ink-3">{stat.label}</dt>
+              <dd className="font-display text-[1.75rem] leading-none text-ink tabular-nums md:text-[2.25rem]">
+                {stat.value}
+              </dd>
+            </div>
+          ))}
+        </dl>
       </div>
     </section>
   );

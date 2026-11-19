@@ -2,7 +2,7 @@ import { Phone } from "lucide-react";
 import { WhatsAppIcon } from "@/components/ui/icons";
 import { site } from "@/lib/site";
 
-/** Floating WhatsApp button (tablet and up) and sticky call/WhatsApp bar (phones). */
+/** Floating WhatsApp button (tablet and up) and a sticky call/WhatsApp bar (phones). */
 export function ContactShortcuts() {
   return (
     <>
@@ -12,23 +12,23 @@ export function ContactShortcuts() {
         rel="noopener noreferrer"
         data-track="whatsapp_click"
         data-section="floating_button"
-        className="fixed right-6 bottom-6 z-40 hidden items-center gap-2.5 rounded-full bg-wa py-3 pr-5 pl-4 font-semibold text-wa-ink shadow-lg shadow-slate-900/20 transition-[filter] duration-200 hover:brightness-95 sm:inline-flex lg:right-8 lg:bottom-8"
+        className="group fixed right-6 bottom-6 z-40 hidden h-14 items-center gap-2.5 rounded-full bg-wa pr-5 pl-4 font-semibold text-wa-ink shadow-[0_1px_2px_rgb(0_0_0/0.12),0_12px_32px_-8px_rgb(11_46_40/0.45)] transition-[translate,background-color] duration-200 ease-(--ease-out) hover:bg-[#1fbf5b] active:scale-[0.97] sm:inline-flex lg:right-8 lg:bottom-8 [@media(hover:hover)]:hover:-translate-y-0.5"
       >
-        <WhatsAppIcon size={20} />
+        <WhatsAppIcon size={22} />
         Chat on WhatsApp
         <span className="sr-only">(opens in a new tab)</span>
       </a>
 
       <nav
         aria-label="Contact options"
-        className="fixed inset-x-0 bottom-0 z-40 border-t border-slate-200 bg-white pb-[env(safe-area-inset-bottom)] shadow-[0_-4px_16px_rgba(15,23,42,0.06)] sm:hidden"
+        className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-paper/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-md sm:hidden"
       >
-        <div className="flex items-center gap-2 px-3 py-2.5">
+        <div className="grid grid-cols-2 gap-2 px-3 py-2.5">
           <a
             href={`tel:${site.phone.e164}`}
             data-track="quote_click"
             data-section="mobile_bar_call"
-            className="flex h-12 flex-1 items-center justify-center gap-2 rounded-xl border border-slate-300 text-[15px] font-semibold text-slate-900 active:bg-slate-50"
+            className="btn min-h-12 border border-ink/20 text-ink"
           >
             <Phone size={18} aria-hidden="true" />
             Call us
@@ -39,10 +39,11 @@ export function ContactShortcuts() {
             rel="noopener noreferrer"
             data-track="whatsapp_click"
             data-section="mobile_bar"
-            className="flex h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-wa text-[15px] font-semibold text-wa-ink active:brightness-95"
+            className="btn btn-wa min-h-12"
           >
             <WhatsAppIcon />
             WhatsApp
+            <span className="sr-only">(opens in a new tab)</span>
           </a>
         </div>
       </nav>

@@ -1,5 +1,5 @@
 import { CookieSettingsButton } from "@/components/consent/cookie-settings-button";
-import { Breadcrumbs } from "@/components/ui/breadcrumbs";
+import { PageHero } from "@/components/sections/page-hero";
 import { JsonLd } from "@/components/seo/json-ld";
 import { cookieTable, privacyLastUpdated } from "@/content/privacy";
 import { breadcrumbSchema } from "@/lib/schema";
@@ -13,15 +13,15 @@ export const metadata = buildMetadata({
   path: "/privacy",
 });
 
-const linkClass = "font-semibold text-wood-ink underline decoration-2 underline-offset-4";
+const linkClass = "font-semibold text-timber underline decoration-1 underline-offset-4";
 
 function PolicySection({ id, title, children }: { id: string; title: string; children: React.ReactNode }) {
   return (
     <section className="mb-12" aria-labelledby={id}>
-      <h2 id={id} className="mb-4 text-2xl font-black tracking-tight text-slate-900 md:text-3xl">
+      <h2 id={id} className="display-3 mb-4 text-ink">
         {title}
       </h2>
-      <div className="space-y-4 leading-relaxed text-slate-700">{children}</div>
+      <div className="space-y-4 leading-relaxed text-ink-2">{children}</div>
     </section>
   );
 }
@@ -34,7 +34,7 @@ const Email = () => (
 
 export default function PrivacyPage() {
   return (
-    <div className="pt-(--header-offset)">
+    <>
       <JsonLd
         data={breadcrumbSchema([
           { name: "Home", path: "/" },
@@ -42,15 +42,14 @@ export default function PrivacyPage() {
         ])}
       />
 
-      <section className="bg-slate-900 py-20 text-white md:py-24">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          <Breadcrumbs tone="light" items={[{ name: "Home", href: "/" }, { name: "Privacy & Cookies" }]} />
-          <h1 className="heading-page mb-6">Privacy &amp; Cookie Notice</h1>
-          <p className="text-lg text-white/70">Last updated {privacyLastUpdated}</p>
-        </div>
-      </section>
+      <PageHero
+        breadcrumbs={[{ name: "Home", href: "/" }, { name: "Privacy & Cookies" }]}
+        kicker={`Last updated ${privacyLastUpdated}`}
+        title="Privacy & Cookie Notice"
+        intro="What we collect, why, who we share it with, and how to change your choices under Singapore's PDPA."
+      />
 
-      <div className="mx-auto max-w-4xl px-4 py-16 sm:px-6 md:py-20 lg:px-8">
+      <div className="container-page max-w-[60rem] py-16 md:py-20">
         <PolicySection id="who-we-are" title="Who we are">
           <p>
             This website is operated by Richwest Integrated (Pte.) Ltd, {site.address.full}. If you have a question
@@ -72,19 +71,19 @@ export default function PrivacyPage() {
 
         <PolicySection id="what-we-collect" title="What we collect and why">
           <p>
-            <strong className="text-slate-900">When you send an enquiry.</strong> Our contact form asks for your name,
-            phone number, email address, the service you are interested in, and an optional message. We use this only to
+            <strong className="text-ink">When you send an enquiry.</strong> Our contact form asks for your name, phone
+            number, email address, the service you are interested in, and an optional message. We use this only to
             respond to your enquiry, prepare a quotation and arrange a site visit. We do not sell it, and we do not use
             it for marketing unless you ask us to.
           </p>
           <p>
-            <strong className="text-slate-900">When you browse.</strong> With your consent we record which pages you
-            view and which buttons you use, along with a randomly generated visitor identifier. This tells us which
-            services people are looking for so we can improve the site. It is not linked to your name unless you also
-            send an enquiry.
+            <strong className="text-ink">When you browse.</strong> With your consent we record which pages you view and
+            which buttons you use, along with a randomly generated visitor identifier. This tells us which services
+            people are looking for so we can improve the site. It is not linked to your name unless you also send an
+            enquiry.
           </p>
           <p>
-            <strong className="text-slate-900">When you contact us on WhatsApp.</strong> Our WhatsApp buttons open a
+            <strong className="text-ink">When you contact us on WhatsApp.</strong> Our WhatsApp buttons open a
             conversation with our business number. That conversation is handled by WhatsApp under its own terms and
             privacy policy.
           </p>
@@ -105,37 +104,35 @@ export default function PrivacyPage() {
             If you are visiting from the United Kingdom, the European Economic Area or Switzerland, nothing beyond the
             strictly necessary items is set until you actively agree.
           </p>
-          <div className="mt-6 overflow-x-auto rounded-3xl border border-slate-200">
+          <div className="mt-6 overflow-x-auto rounded-lg border border-line bg-white">
             <table className="w-full text-left text-sm">
               <caption className="sr-only">Cookies and browser storage used on this website</caption>
-              <thead className="bg-slate-50 text-slate-900">
+              <thead className="bg-paper-2 text-ink">
                 <tr>
                   {["Name", "Set by", "Purpose", "Category", "Kept for"].map((h) => (
-                    <th key={h} scope="col" className="px-4 py-3 font-black">
+                    <th key={h} scope="col" className="px-4 py-3 font-semibold">
                       {h}
                     </th>
                   ))}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-200">
+              <tbody className="divide-y divide-line">
                 {cookieTable.map((row) => (
                   <tr key={row.name} className="align-top">
-                    <th scope="row" className="px-4 py-4 font-mono text-xs font-semibold text-slate-900">
+                    <th scope="row" className="px-4 py-4 font-mono text-xs font-semibold text-ink">
                       {row.name}
                     </th>
-                    <td className="px-4 py-4 text-slate-600">{row.provider}</td>
-                    <td className="px-4 py-4 text-slate-600">{row.purpose}</td>
-                    <td className="px-4 py-4 text-slate-600">{row.category}</td>
-                    <td className="px-4 py-4 text-slate-600">{row.retention}</td>
+                    <td className="px-4 py-4 text-ink-2">{row.provider}</td>
+                    <td className="px-4 py-4 text-ink-2">{row.purpose}</td>
+                    <td className="px-4 py-4 text-ink-2">{row.category}</td>
+                    <td className="px-4 py-4 text-ink-2">{row.retention}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
           <p className="mt-6">
-            <CookieSettingsButton className="inline-flex items-center justify-center rounded-2xl bg-slate-900 px-8 py-4 font-bold text-white transition-colors hover:bg-wood-dark">
-              Change your cookie choices
-            </CookieSettingsButton>
+            <CookieSettingsButton className="btn btn-ink">Change your cookie choices</CookieSettingsButton>
           </p>
         </PolicySection>
 
@@ -143,23 +140,23 @@ export default function PrivacyPage() {
           <p>We use a small number of service providers to run this site and measure our advertising:</p>
           <ul className="list-disc space-y-2 pl-6">
             <li>
-              <strong className="text-slate-900">Google</strong> (Analytics 4, Tag Manager and Ads) for usage statistics
-              and ad measurement. Google acts as an independent controller for advertising data.
+              <strong className="text-ink">Google</strong> (Analytics 4, Tag Manager and Ads) for usage statistics and
+              ad measurement. Google acts as an independent controller for advertising data.
             </li>
             <li>
-              <strong className="text-slate-900">Meta Platforms</strong> for measuring our Facebook and Instagram
-              advertising. The Meta Pixel is only loaded if you accept advertising cookies.
+              <strong className="text-ink">Meta Platforms</strong> for measuring our Facebook and Instagram advertising.
+              The Meta Pixel is only loaded if you accept advertising cookies.
             </li>
             <li>
-              <strong className="text-slate-900">Supabase</strong> for storing enquiries and site usage records.
+              <strong className="text-ink">Supabase</strong> for storing enquiries and site usage records.
             </li>
             <li>
-              <strong className="text-slate-900">Vercel</strong> for website hosting. Its servers process your IP
-              address in order to deliver the page.
+              <strong className="text-ink">Vercel</strong> for website hosting. Its servers process your IP address in
+              order to deliver the page.
             </li>
             <li>
-              <strong className="text-slate-900">Google Maps</strong> for the map on our contact page. Loading it sends
-              your IP address to Google. Our typeface is served from our own domain.
+              <strong className="text-ink">Google Maps</strong> for the map on our contact page. Loading it sends your
+              IP address to Google. Our typeface is served from our own domain.
             </li>
           </ul>
           <p>
@@ -208,6 +205,6 @@ export default function PrivacyPage() {
           </p>
         </PolicySection>
       </div>
-    </div>
+    </>
   );
 }

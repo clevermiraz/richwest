@@ -167,3 +167,91 @@ export const contactServiceOptions = [
   "Commercial Flooring Contractor",
   "Other",
 ] as const;
+
+/** The eight services featured on the homepage index, with a one-line pitch each. */
+export const featuredServices = [
+  {
+    name: "Wooden Floor",
+    href: "/services/wooden-floor",
+    group: "Flooring",
+    tagline: "Engineered and solid timber, installed with moisture checks for Singapore humidity.",
+    image: "/images/wooden-floor-living.webp",
+  },
+  {
+    name: "Vinyl Flooring",
+    href: "/services/vinyl-flooring",
+    group: "Flooring",
+    tagline: "Water-resistant SPC and LVT planks for HDB flats, condos and offices.",
+    image: "/images/vinyl-floor-bedroom.webp",
+  },
+  {
+    name: "Parquet Flooring",
+    href: "/services/parquet-flooring",
+    group: "Flooring",
+    tagline: "Herringbone and chevron patterns laid and finished by hand.",
+    image: "/images/wooden-floor-herringbone.webp",
+  },
+  {
+    name: "Carpet & Office Carpet Tiles",
+    href: "/services/carpet-floor",
+    group: "Commercial",
+    tagline: "Quiet, replaceable carpet tiles fitted after hours so work carries on.",
+    image: "/images/commercial-vinyl-office.webp",
+  },
+  {
+    name: "Sports Floor",
+    href: "/services/sports-floor",
+    group: "Commercial",
+    tagline: "Indoor courts with the right shock absorption and line marking.",
+    image: "/images/sports-floor-badminton.webp",
+  },
+  {
+    name: "Composite Deck",
+    href: "/services/composite-deck",
+    group: "Outdoor",
+    tagline: "Low-maintenance boards for balconies, pools and rooftops.",
+    image: "/images/composite-deck-pool.webp",
+  },
+  {
+    name: "Wooden Deck",
+    href: "/services/wooden-deck",
+    group: "Outdoor",
+    tagline: "Natural timber decks with proper drainage, ventilation and varnish care.",
+    image: "/images/outdoor-deck-composite.webp",
+  },
+  {
+    name: "Polycarbonate Roof Shelters",
+    href: "/services/polycarbonate-roofing-shelters",
+    group: "Outdoor",
+    tagline: "Covered walkways and patios that keep the rain off and the light in.",
+    image: "/images/composite-deck-rooftop.webp",
+  },
+] as const;
+
+/** Every project photo for the portfolio gallery, grouped by what it shows. */
+export const gallery = [
+  { image: "/images/wooden-floor-hallway.webp", category: "Wooden Floor", href: "/services/wooden-floor" },
+  { image: "/images/wooden-floor-herringbone.webp", category: "Parquet", href: "/services/parquet-flooring" },
+  {
+    image: "/images/composite-deck-balcony-sg.webp",
+    category: "Decking",
+    href: "/services/balcony-decking-specialist",
+  },
+  { image: "/images/wooden-floor-living.webp", category: "Wooden Floor", href: "/services/wooden-floor" },
+  { image: "/images/sports-court-completed.webp", category: "Sports Floor", href: "/services/sports-floor" },
+  { image: "/images/vinyl-floor-bedroom.webp", category: "Vinyl", href: "/services/vinyl-flooring" },
+  { image: "/images/composite-deck-pool.webp", category: "Decking", href: "/services/composite-deck" },
+  {
+    image: "/images/commercial-vinyl-office.webp",
+    category: "Commercial",
+    href: "/services/commercial-flooring-contractor",
+  },
+  { image: "/images/wooden-floor-corridor.webp", category: "Wooden Floor", href: "/services/wooden-floor" },
+  { image: "/images/composite-deck-rooftop.webp", category: "Decking", href: "/services/composite-timber-deck" },
+  { image: "/images/sports-floor-badminton.webp", category: "Sports Floor", href: "/services/sports-floor" },
+  { image: "/images/luxury-interior-wood.webp", category: "Wooden Floor", href: "/services/wooden-floor" },
+  { image: "/images/outdoor-deck-composite.webp", category: "Decking", href: "/services/wooden-deck" },
+  { image: "/images/wooden-floor-bedroom.webp", category: "Wooden Floor", href: "/services/wooden-floor" },
+  { image: "/images/composite-deck-installation.webp", category: "Installation", href: "/services/composite-deck" },
+  { image: "/images/sports-floor-installation.webp", category: "Installation", href: "/services/sports-floor" },
+] as const;

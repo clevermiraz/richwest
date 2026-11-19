@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import { Hanken_Grotesk, Instrument_Serif } from "next/font/google";
 import { Analytics, consentDefaultsScript } from "@/components/analytics/analytics";
 import { ConsentBanner } from "@/components/consent/consent-banner";
 import { ContactShortcuts } from "@/components/layout/contact-shortcuts";
@@ -14,10 +14,20 @@ import "./globals.css";
 /** Every page is content-only, so require the whole route to prerender. */
 export const ensureStatic = "navigation";
 
-const inter = Inter({
+/** Functional text: a warm, slightly narrow grotesk (variable, one file). */
+const grotesk = Hanken_Grotesk({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-inter",
+  variable: "--font-grotesk",
+});
+
+/** Display headlines. The italic is only used for emphasis, so it is not preloaded. */
+const serif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+  display: "swap",
+  variable: "--font-serif",
 });
 
 export const metadata: Metadata = {
@@ -57,16 +67,16 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en-SG" className={inter.variable}>
+    <html lang="en-SG" className={`${grotesk.variable} ${serif.variable}`}>
       <head>
         {/* Consent Mode v2 defaults must be set before any Google tag loads. */}
         <script id="consent-defaults" dangerouslySetInnerHTML={{ __html: consentDefaultsScript }} />
         {/* Tags load after interaction, so a DNS lookup is enough; a preconnect would go unused. */}
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
       </head>
-      <body className="font-sans">
+      <body>
         <JsonLd data={[localBusinessSchema(), websiteSchema()]} />
-        <div className="flex min-h-screen flex-col">
+        <div className="flex min-h-svh flex-col">
           <a href="#main-content" className="skip-link">
             Skip to main content
           </a>
