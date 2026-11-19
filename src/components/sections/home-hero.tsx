@@ -58,7 +58,15 @@ export function HomeHero() {
             </a>
           </div>
           <p className="mt-6 text-sm text-ink-3 max-lg:order-2" style={d(4)}>
-            {site.replyPromise} · Free on-site measurement and samples
+            {site.replyPromise} · Free on-site measurement · Call{" "}
+            <a
+              href={`tel:${site.phone.e164}`}
+              className="font-medium text-ink underline decoration-ink/30 underline-offset-4 hover:decoration-ink"
+              data-track="quote_click"
+              data-section="home_hero_call"
+            >
+              {site.phone.display}
+            </a>
           </p>
         </div>
 

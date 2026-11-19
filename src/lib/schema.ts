@@ -1,3 +1,4 @@
+import { services } from "@/content/services";
 import type { FaqItem, Post, QA, Service } from "@/content/types";
 import { absoluteUrl, site } from "./site";
 
@@ -5,6 +6,12 @@ import { absoluteUrl, site } from "./site";
 
 const BUSINESS_ID = absoluteUrl("/#business");
 const ORGANIZATION_REF = { "@type": "Organization", "@id": BUSINESS_ID, name: site.name, url: absoluteUrl("/") };
+
+const SINGAPORE = {
+  "@type": "Country",
+  name: "Singapore",
+  sameAs: ["https://en.wikipedia.org/wiki/Singapore", "https://www.wikidata.org/wiki/Q334"],
+};
 
 const postalAddress = {
   "@type": "PostalAddress",
@@ -38,20 +45,28 @@ export function localBusinessSchema() {
       opens: h.opens,
       closes: h.closes,
     })),
-    areaServed: { "@type": "Country", name: "Singapore" },
+    areaServed: SINGAPORE,
+    knowsAbout: services.map((s) => s.primaryKeyword),
+    contactPoint: {
+      "@type": "ContactPoint",
+      contactType: "customer service",
+      telephone: site.phone.e164,
+      email: site.email,
+      areaServed: "SG",
+      availableLanguage: "English",
+    },
     hasOfferCatalog: {
       "@type": "OfferCatalog",
       name: "Flooring and Decking Services",
-      itemListElement: [
-        "Wooden Floor",
-        "Vinyl Flooring",
-        "Carpet Floor & Office Carpet Tiles",
-        "Sports Floor",
-        "Wooden Deck & Outdoor Decking",
-        "Composite Deck & Composite Timber Deck",
-        "Wooden Deck Varnish & Maintenance",
-        "Polycarbonate Roofing Shelters",
-      ].map((name) => ({ "@type": "Offer", itemOffered: { "@type": "Service", name } })),
+      itemListElement: services.map((s) => ({
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: s.title,
+          url: absoluteUrl(`/services/${s.slug}`),
+          areaServed: SINGAPORE,
+        },
+      })),
     },
   };
 }
@@ -101,8 +116,8 @@ export function serviceSchema(service: Service) {
     description: service.metaDescription ?? service.description,
     url: absoluteUrl(`/services/${service.slug}`),
     image: absoluteUrl(service.heroImage),
-    areaServed: { "@type": "Country", name: "Singapore" },
-    provider: ORGANIZATION_REF,
+    areaServed: SINGAPORE,
+    provider: { "@id": BUSINESS_ID },
   };
 }
 
@@ -115,9 +130,10 @@ export function articleSchema(post: Post) {
     description: post.excerpt,
     image: [absoluteUrl(post.image)],
     datePublished: post.dateISO,
-    dateModified: post.dateISO,
+    dateModified: post.updatedISO ?? post.dateISO,
     keywords: post.keywords.join(", "),
-    author: { "@type": "Person", name: post.author },
+    // Articles are written by the company, so the author is the organisation rather than an anonymous person.
+    author: ORGANIZATION_REF,
     publisher: {
       "@type": "Organization",
       "@id": BUSINESS_ID,

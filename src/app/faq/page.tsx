@@ -10,7 +10,7 @@ import { buildMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
 
 export const metadata = buildMetadata({
-  title: "Flooring FAQs Singapore",
+  title: "Flooring & Decking FAQs Singapore",
   description:
     "Answers to common questions about flooring and decking in Singapore, including timelines, warranties, and material choices.",
   path: "/faq",

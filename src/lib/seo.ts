@@ -7,10 +7,12 @@ interface PageSeo {
   description: string;
   /** Path beginning with "/"; used for the canonical URL and og:url. */
   path: string;
+  /** Kept for content planning only; Google ignores the meta keywords tag, so it is not emitted. */
   keywords?: string | readonly string[];
   ogImage?: string;
   ogType?: "website" | "article";
   publishedTime?: string;
+  modifiedTime?: string;
   authors?: string[];
   noIndex?: boolean;
 }
@@ -25,14 +27,14 @@ export function buildMetadata({
   title,
   description,
   path,
-  keywords,
   ogImage = DEFAULT_OG_IMAGE,
   ogType = "website",
   publishedTime,
+  modifiedTime,
   authors,
   noIndex = false,
 }: PageSeo): Metadata {
-  const fullTitle = `${title} | ${site.name}`;
+  const fullTitle = `${title} | ${site.shortName}`;
   const url = absoluteUrl(path);
   const images = [{ url: ogImage, width: 1200, height: 630, alt: title }];
 
@@ -40,7 +42,6 @@ export function buildMetadata({
     // The root layout's title template does not apply to the root page itself.
     title: path === "/" ? { absolute: fullTitle } : title,
     description,
-    keywords: typeof keywords === "string" ? keywords : keywords?.join(", "),
     alternates: { canonical: url },
     robots: noIndex ? { index: false, follow: true } : { index: true, follow: true },
     openGraph: {
@@ -51,7 +52,7 @@ export function buildMetadata({
       siteName: site.name,
       locale: site.locale,
       images,
-      ...(ogType === "article" ? { publishedTime, authors } : {}),
+      ...(ogType === "article" ? { publishedTime, modifiedTime, authors } : {}),
     },
     twitter: {
       card: "summary_large_image",

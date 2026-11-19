@@ -50,6 +50,14 @@ export interface Post {
   image: string;
   readTime: string;
   keywords: readonly string[];
+  /** Shorter title for search results; the full title stays as the <h1>. */
+  seoTitle?: string;
+  /** Additional subheaded sections rendered after `content`. */
+  sections?: readonly ServiceSection[];
+  /** Service the article leads to (in-article call to action). */
+  serviceSlug?: string;
+  /** Last substantive revision, for dateModified and the sitemap. */
+  updatedISO?: string;
 }
 
 export interface FaqItem {

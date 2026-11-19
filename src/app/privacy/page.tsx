@@ -9,7 +9,7 @@ import { site } from "@/lib/site";
 export const metadata = buildMetadata({
   title: "Privacy & Cookie Notice",
   description:
-    "How Richwest Integrated collects and uses personal data, the cookies this website sets, and how to change your cookie choices or exercise your rights under Singapore’s PDPA.",
+    "How Richwest Integrated collects and uses personal data, the cookies this site sets, and how to change your choices under Singapore’s PDPA.",
   path: "/privacy",
 });
 

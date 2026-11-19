@@ -10,9 +10,9 @@ import { breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
-  title: "Flooring & Decking Portfolio",
+  title: "Flooring & Decking Projects in Singapore",
   description:
-    "Browse Singapore projects: wooden floors, timber decking, composite decking, deck varnish maintenance, and polycarbonate shelters.",
+    "Photos of our flooring and decking projects in Singapore homes, condos, offices and sports halls: wooden floors, vinyl, composite decks and more.",
   path: "/portfolio",
   keywords:
     "wooden floor, wooden deck, timber decking, composite timber decking, wooden deck varnish, outdoor deck, polycarbonate roof shelters, decking contractor singapore",

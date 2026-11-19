@@ -1,7 +1,8 @@
 // Content extracted from the original richwestipl.sg build. Edit here to change site copy.
+import { serviceExtras } from "./service-extras";
 import type { Service } from "./types";
 
-export const services = [
+const baseServices = [
   {
     slug: "wooden-floor",
     primaryKeyword: "wooden floor",
@@ -757,7 +758,20 @@ export const services = [
   },
 ] as const satisfies readonly Service[];
 
-export type ServiceSlug = (typeof services)[number]["slug"];
+export type ServiceSlug = (typeof baseServices)[number]["slug"];
+
+/** Base copy merged with the SEO additions in service-extras.ts (title, meta, sections, FAQs). */
+export const services: readonly Service[] = baseServices.map((s) => {
+  const extra = serviceExtras[s.slug];
+  if (!extra) return s;
+  return {
+    ...s,
+    seoTitle: extra.seoTitle,
+    metaDescription: extra.metaDescription,
+    sections: [...s.sections, ...extra.sections],
+    faq: [...s.faq, ...extra.faq],
+  };
+});
 
 export function getService(slug: string): Service | undefined {
   return services.find((s) => s.slug === slug);

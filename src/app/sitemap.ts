@@ -4,7 +4,7 @@ import { services } from "@/content/services";
 import { absoluteUrl } from "@/lib/site";
 
 /** Bump when site-wide copy changes so crawlers re-fetch static pages. */
-const CONTENT_UPDATED = "2026-09-23";
+const CONTENT_UPDATED = "2026-11-19";
 
 type Entry = MetadataRoute.Sitemap[number];
 
@@ -37,7 +37,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
     ...posts.map((p): Entry => ({
       url: absoluteUrl(`/blog/${p.slug}`),
-      lastModified: p.dateISO > CONTENT_UPDATED ? p.dateISO : CONTENT_UPDATED,
+      lastModified: p.updatedISO ?? p.dateISO,
       changeFrequency: "yearly",
       priority: 0.6,
       images: [absoluteUrl(p.image)],

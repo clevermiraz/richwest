@@ -9,7 +9,7 @@ import { buildMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
 
 export const metadata = buildMetadata({
-  title: "Flooring Solutions Singapore",
+  title: "Flooring Contractor Singapore Since 2003",
   description: site.description,
   path: "/",
   keywords:

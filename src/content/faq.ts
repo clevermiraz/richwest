@@ -57,4 +57,34 @@ export const faqs: readonly FaqItem[] = [
     answer:
       "Yes. Our team is trained to minimise dust and disruption, and we can phase the work so you can continue living in your home during installation.",
   },
+  {
+    question: "How much does flooring cost in Singapore?",
+    answer:
+      "It depends on the floor area, the material and grade, how much preparation the existing floor needs, and extras such as skirting, tile removal and furniture moving. After a free site visit we give you an itemised quotation so you can see exactly what is included.",
+  },
+  {
+    question: "Which areas of Singapore do you serve?",
+    answer:
+      "We work across Singapore, including HDB estates, condominiums, landed homes and commercial buildings. Our office is at 43J Paya Lebar Crescent, and site visits are by appointment.",
+  },
+  {
+    question: "Do you follow HDB and condominium renovation rules?",
+    answer:
+      "Yes. We check the renovation rules that apply to your home, such as permitted working hours and any notification or approval your management requires, and plan the work around them.",
+  },
+  {
+    question: "Can new flooring be laid over my existing tiles?",
+    answer:
+      "Often, yes. Vinyl and engineered wood floating floors can usually go over tiles that are firmly bonded and level, which avoids hacking. We check for hollow or cracked tiles during the site visit.",
+  },
+  {
+    question: "How do I get a quotation?",
+    answer:
+      "WhatsApp or call us on +65 9625 2205, or send the form on our contact page. We reply within one hour during business hours and arrange a free on-site measurement.",
+  },
+  {
+    question: "Do I need to move out during installation?",
+    answer:
+      "Usually not. Most flooring projects can be phased room by room. We will let you know if any room needs to be cleared or left unused while finishes dry.",
+  },
 ];

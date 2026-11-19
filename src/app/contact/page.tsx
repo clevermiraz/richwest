@@ -8,9 +8,9 @@ import { buildMetadata } from "@/lib/seo";
 import { hoursDisplay, site } from "@/lib/site";
 
 export const metadata = buildMetadata({
-  title: "Contact | Free Flooring Quote",
+  title: "Free Flooring Quote Singapore: Contact Us",
   description:
-    "Get a free flooring quote in Singapore. Contact Richwest Integrated for on-site consultation for flooring, decking, or carpentry.",
+    "Get a free flooring or decking quote in Singapore. WhatsApp or call +65 9625 2205, or send the form. We reply within 1 hour during business hours.",
   path: "/contact",
   keywords:
     "flooring contractor singapore, commercial flooring contractor, wooden floor quote singapore, vinyl flooring quote singapore, carpet floor quotation singapore, office carpet tiles singapore, sports floor contractor singapore, wooden deck contractor singapore, composite deck singapore, poly carbonate roofing shelters singapore",

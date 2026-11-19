@@ -9,9 +9,9 @@ import { buildMetadata } from "@/lib/seo";
 import { absoluteUrl } from "@/lib/site";
 
 export const metadata = buildMetadata({
-  title: "Flooring & Decking Blog",
+  title: "Flooring & Decking Guides for Singapore",
   description:
-    "Flooring tips and guides for Singapore: wooden floors, vinyl, carpets, decking, and maintenance best practices.",
+    "Practical guides to flooring and decking in Singapore: choosing materials, humidity, maintenance, costs and hiring the right contractor.",
   path: "/blog",
   keywords:
     "flooring blog singapore, wood flooring tips sg, vinyl flooring maintenance singapore, outdoor decking trends sg, wooden floor, wooden deck, wooden deck varnish, composite deck, sports floor, carpet floor, office carpet tiles singapore, commercial flooring contractor, flooring contractor singapore, poly carbonate roofing shelters",

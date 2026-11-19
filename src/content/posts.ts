@@ -1,7 +1,8 @@
 // Content extracted from the original richwestipl.sg build. Edit here to change site copy.
+import { postExtras } from "./post-extras";
 import type { Post } from "./types";
 
-export const posts = [
+const basePosts = [
   {
     id: "choose-flooring-contractor-singapore",
     slug: "flooring-contractor-singapore-checklist",
@@ -193,6 +194,28 @@ export const posts = [
     keywords: ["commercial flooring contractor", "office carpet tiles singapore", "sports floor"],
   },
 ] as const satisfies readonly Post[];
+
+/** Words per minute used to estimate reading time. */
+const WPM = 220;
+
+const wordCount = (p: Post) =>
+  [p.excerpt, ...p.content, ...(p.sections ?? []).flatMap((s) => [s.heading, ...s.body])].join(" ").split(/\s+/).length;
+
+/** Base articles merged with the additions in post-extras.ts; reading time is recalculated. */
+export const posts: readonly Post[] = basePosts.map((p) => {
+  const extra = postExtras[p.slug];
+  const merged: Post = extra
+    ? {
+        ...p,
+        author: "Richwest Integrated",
+        seoTitle: extra.seoTitle,
+        sections: extra.sections,
+        serviceSlug: extra.serviceSlug,
+        updatedISO: extra.updatedISO,
+      }
+    : p;
+  return { ...merged, readTime: `${Math.max(1, Math.round(wordCount(merged) / WPM))} min read` };
+});
 
 export function getPost(slug: string): Post | undefined {
   return posts.find((p) => p.slug === slug);

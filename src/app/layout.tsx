@@ -33,8 +33,8 @@ const serif = Instrument_Serif({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `Flooring Solutions Singapore | ${site.name}`,
-    template: `%s | ${site.name}`,
+    default: `Flooring Contractor Singapore Since 2003 | ${site.shortName}`,
+    template: `%s | ${site.shortName}`,
   },
   description: site.description,
   applicationName: site.name,

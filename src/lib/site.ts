@@ -4,12 +4,14 @@
  */
 export const site = {
   name: "Richwest Integrated",
+  /** Used in page titles, where every character counts. */
+  shortName: "Richwest",
   legalName: "Richwest Integrated (Pte.) Ltd.",
   url: (process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.richwestipl.sg").replace(/\/$/, ""),
   locale: "en_SG",
   themeColor: "#f6f2ec",
   description:
-    "Get reliable flooring solutions in Singapore from Richwest Integrated. Quality flooring services for residential and commercial spaces. Contact us today!",
+    "Flooring contractor in Singapore since 2003: wooden floors, vinyl, carpet tiles, sports floors and decks for homes and offices. Free site visit: +65 9625 2205.",
   phone: {
     /** Non-breaking spaces so the number never wraps mid-way. */
     display: "+65\u00a09625\u00a02205",

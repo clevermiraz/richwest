@@ -95,6 +95,18 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
             <span className="sr-only">(opens in a new tab)</span>
           </a>
         </div>
+        <p className="mt-5 text-sm text-ink-3">
+          Prefer to talk? Call{" "}
+          <a
+            href={`tel:${site.phone.e164}`}
+            className="font-medium text-ink underline decoration-ink/30 underline-offset-4 hover:decoration-ink"
+            data-track="quote_click"
+            data-section="service_hero_call"
+          >
+            {site.phone.display}
+          </a>{" "}
+          · {site.replyPromise} · Free site visit
+        </p>
       </PageHero>
 
       <section className="py-16 md:py-24">

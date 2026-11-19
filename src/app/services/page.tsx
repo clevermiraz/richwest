@@ -10,9 +10,9 @@ import { buildMetadata } from "@/lib/seo";
 import { absoluteUrl, serviceGroups } from "@/lib/site";
 
 export const metadata = buildMetadata({
-  title: "Flooring & Decking Services",
+  title: "Flooring & Decking Services in Singapore",
   description:
-    "Explore flooring and decking services in Singapore: wooden floors, vinyl, carpet, sports floors, outdoor decking, and polycarbonate shelters.",
+    "15 flooring and decking services in Singapore: wooden floor, vinyl, parquet, carpet tiles, sports floors and composite decks. Free site visit: +65 9625 2205.",
   path: "/services",
   keywords:
     "wooden floor, vinyl flooring, carpet floor, office carpet tiles singapore, sports floor, wooden deck, outdoor deck, composite deck, composite timber deck, wooden deck varnish, balcony decking specialist, flooring contractor singapore, commercial flooring contractor, poly carbonate roofing shelters",

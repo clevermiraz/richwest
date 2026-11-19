@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { CSSProperties } from "react";
 import { PageHero } from "@/components/sections/page-hero";
 import { ProcessSteps } from "@/components/sections/process-steps";
@@ -6,12 +7,12 @@ import { SiteImage } from "@/components/ui/site-image";
 import { stats } from "@/content/home";
 import { breadcrumbSchema, webPageSchema } from "@/lib/schema";
 import { buildMetadata } from "@/lib/seo";
-import { absoluteUrl, site } from "@/lib/site";
+import { absoluteUrl, serviceGroups, site } from "@/lib/site";
 
 export const metadata = buildMetadata({
-  title: "About Us",
+  title: "About Our Flooring Team in Singapore",
   description:
-    "Learn about Richwest Integrated, a flooring contractor in Singapore for wooden floors, vinyl, carpet, sports floors, and outdoor decking.",
+    "Richwest Integrated has installed 1,000+ floors and decks across Singapore since 2003, with in-house craftsmen and no sub-contracting. Call +65 9625 2205.",
   path: "/about",
   keywords:
     "flooring contractor singapore, commercial flooring contractor, wooden floor, vinyl flooring, carpet floor, sports floor, wooden deck, composite deck, balcony decking specialist",
@@ -160,6 +161,40 @@ export default function AboutPage() {
               </li>
             ))}
           </ol>
+        </div>
+      </section>
+
+      <section aria-labelledby="install-heading" className="border-t border-line bg-paper-2 py-20 md:py-28">
+        <div className="container-page grid gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <p className="kicker">What we install</p>
+            <h2 id="install-heading" className="display-2" data-reveal="">
+              One team for <em className="text-timber">every floor.</em>
+            </h2>
+            <p className="mt-5 text-ink-2">
+              From HDB flats and condominiums to offices, schools and sports halls across Singapore, the same in-house
+              crew measures, supplies and installs every project.
+            </p>
+          </div>
+          <div className="grid gap-10 sm:grid-cols-3 lg:col-span-8">
+            {serviceGroups.map((group) => (
+              <div key={group.name}>
+                <h3 className="font-display text-2xl text-ink">{group.name}</h3>
+                <ul className="mt-4 border-t border-line">
+                  {group.items.map((item) => (
+                    <li key={item.href} className="border-b border-line">
+                      <Link
+                        href={item.href}
+                        className="flex min-h-11 items-center py-2 text-ink-2 transition-colors hover:text-timber"
+                      >
+                        {item.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

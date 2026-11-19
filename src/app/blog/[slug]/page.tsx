@@ -22,13 +22,14 @@ export async function generateMetadata({ params }: PageProps<"/blog/[slug]">): P
   if (!post) return { title: "Article Not Found", robots: { index: false, follow: true } };
 
   return buildMetadata({
-    title: post.title,
+    title: post.seoTitle ?? post.title,
     description: post.excerpt,
     path: `/blog/${post.slug}`,
     keywords: post.keywords,
     ogImage: post.image,
     ogType: "article",
     publishedTime: post.dateISO,
+    modifiedTime: post.updatedISO,
     authors: [post.author],
   });
 }
@@ -38,6 +39,7 @@ export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">
   if (!post) notFound();
 
   const relatedServices = services.filter((s) => post.keywords.includes(s.primaryKeyword)).slice(0, 8);
+  const mainService = services.find((s) => s.slug === post.serviceSlug);
   const morePosts = posts.filter((p) => p.slug !== post.slug).slice(0, 3);
 
   return (
@@ -68,9 +70,15 @@ export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">
                 className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.9375rem] text-ink-3"
                 style={{ "--d": 2 } as React.CSSProperties}
               >
-                <span>By {post.author}</span>
+                <span>By the {post.author} team</span>
                 <span aria-hidden="true">·</span>
-                <time dateTime={post.dateISO}>{formatDate(post.dateISO)}</time>
+                {post.updatedISO ? (
+                  <span>
+                    Updated <time dateTime={post.updatedISO}>{formatDate(post.updatedISO)}</time>
+                  </span>
+                ) : (
+                  <time dateTime={post.dateISO}>{formatDate(post.dateISO)}</time>
+                )}
                 <span aria-hidden="true">·</span>
                 <span>{post.readTime}</span>
               </p>
@@ -96,6 +104,34 @@ export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">
             {post.content.map((paragraph) => (
               <p key={paragraph}>{paragraph}</p>
             ))}
+            {post.sections?.map((section) => (
+              <section key={section.heading}>
+                <h2>{section.heading}</h2>
+                {section.body.map((paragraph) => (
+                  <p key={paragraph} className="mt-5">
+                    {paragraph}
+                  </p>
+                ))}
+              </section>
+            ))}
+            {mainService && (
+              <aside className="!mt-14 rounded-xl border border-line bg-paper-2 p-6 md:p-8" aria-label="Get help">
+                <p className="font-display text-[1.75rem] leading-tight text-ink">
+                  Need help with {mainService.primaryKeyword}?
+                </p>
+                <p className="mt-3 text-base">
+                  Our team handles this across Singapore, from site survey to handover. See our{" "}
+                  <Link href={`/services/${mainService.slug}`}>
+                    {mainService.title.replace(/ Singapore$/, "")} service
+                  </Link>
+                  , or{" "}
+                  <a href={`tel:${site.phone.e164}`} data-track="quote_click" data-section="blog_post_inline_call">
+                    call {site.phone.display}
+                  </a>{" "}
+                  for a free site visit.
+                </p>
+              </aside>
+            )}
           </div>
 
           <aside className="lg:col-span-3 lg:col-start-10" aria-label="Get help with this">

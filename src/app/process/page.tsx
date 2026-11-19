@@ -8,11 +8,12 @@ import { FaqList } from "@/components/ui/faq-list";
 import { faqs } from "@/content/faq";
 import { breadcrumbSchema, webPageSchema } from "@/lib/schema";
 import { buildMetadata } from "@/lib/seo";
+import { serviceGroups } from "@/lib/site";
 
 export const metadata = buildMetadata({
-  title: "Flooring Contractor Singapore",
+  title: "How We Install Floors in Singapore",
   description:
-    "Richwest Integrated is your flooring contractor in Singapore for reliable flooring solutions and professional service. Enquire today for your project!",
+    "Our 5-step flooring process in Singapore: consultation, site survey, itemised quote, installation by our own crew and final walk-through. Call +65 9625 2205.",
   path: "/process",
   keywords:
     "flooring contractor singapore, commercial flooring contractor, wooden floor installation singapore, vinyl flooring installation singapore, wooden deck installation singapore, composite deck installation singapore, carpet floor installation singapore, sports floor installation singapore",
@@ -97,6 +98,25 @@ export default function ProcessPage() {
           </ol>
         </div>
       </section>
+
+      <nav aria-labelledby="process-services-heading" className="border-t border-line py-14">
+        <div className="container-page">
+          <h2 id="process-services-heading" className="mb-5 text-sm font-medium text-ink-3">
+            The same process for every service we install
+          </h2>
+          <ul className="flex flex-wrap gap-2">
+            {serviceGroups
+              .flatMap((g) => g.items)
+              .map((item) => (
+                <li key={item.href}>
+                  <Link href={item.href} className="chip">
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
+          </ul>
+        </div>
+      </nav>
 
       <section aria-labelledby="process-faq-heading" className="border-t border-line bg-paper-2 py-20 md:py-28">
         <div className="container-page grid gap-10 lg:grid-cols-12">
