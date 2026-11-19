@@ -100,13 +100,13 @@ export default function AboutPage() {
               <div
                 key={v.title}
                 {...reveal(i)}
-                className="group rounded-3xl border border-slate-100 bg-white p-8 text-center shadow-sm transition-all hover:shadow-xl"
+                className="group rounded-3xl border border-slate-100 bg-white p-8 text-center shadow-sm transition-shadow hover:shadow-xl"
               >
                 <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-wood-accent/10 text-wood-ink transition-colors group-hover:bg-wood-accent group-hover:text-white">
                   <Icon name={v.icon} size={32} />
                 </div>
                 <h3 className="mb-4 text-xl font-bold text-slate-900">{v.title}</h3>
-                <p className="leading-relaxed text-slate-500">{v.desc}</p>
+                <p className="leading-relaxed text-slate-600">{v.desc}</p>
               </div>
             ))}
           </div>

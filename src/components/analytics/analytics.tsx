@@ -9,17 +9,24 @@ import { site } from "@/lib/site";
 function injectScript(src: string) {
   const s = document.createElement("script");
   s.async = true;
+  s.fetchPriority = "low";
   s.src = src;
   document.head.appendChild(s);
 }
+
+/** How long after `load` third-party tags start if the visitor has not interacted yet. */
+const IDLE_LOAD_DELAY_MS = 5000;
 
 let googleLoaded = false;
 function loadGoogle() {
   if (googleLoaded) return;
   googleLoaded = true;
   window.dataLayer = window.dataLayer ?? [];
-  window.dataLayer.push({ "gtm.start": Date.now(), event: "gtm.js" });
-  injectScript(`https://www.googletagmanager.com/gtm.js?id=${site.analytics.gtmId}`);
+  // Set NEXT_PUBLIC_GTM_ID="" to skip the container (it currently holds no tags).
+  if (site.analytics.gtmId) {
+    window.dataLayer.push({ "gtm.start": Date.now(), event: "gtm.js" });
+    injectScript(`https://www.googletagmanager.com/gtm.js?id=${site.analytics.gtmId}`);
+  }
   injectScript(`https://www.googletagmanager.com/gtag/js?id=${site.analytics.gaId}`);
   window.gtag?.("js", new Date());
   window.gtag?.("config", site.analytics.gaId, { send_page_view: false });
@@ -45,36 +52,47 @@ function loadMeta() {
   fbq.version = "2.0";
   fbq.queue = [];
   window.fbq = fbq;
+  // The official snippet also sets _fbq; without it fbevents.js reports "conflicting versions".
+  (window as Window & { _fbq?: Fbq })._fbq = fbq;
   injectScript("https://connect.facebook.net/en_US/fbevents.js");
   fbq("init", site.analytics.metaPixelId);
   fbq("track", "PageView");
 }
 
 /**
- * Loads Google tags (under Consent Mode) after the page is idle or on first
- * interaction, so they never compete with LCP. Meta Pixel only loads with
- * marketing consent. Also records page views and `data-track` clicks.
+ * Loads Google tags (under Consent Mode) and, with marketing consent, the Meta
+ * Pixel on first interaction or shortly after load, so they never compete with
+ * LCP or TBT. Page views queue in dataLayer until then. Also records
+ * `data-track` clicks.
  */
 export function Analytics() {
   const pathname = usePathname();
 
   useEffect(() => {
-    const schedule = () =>
-      "requestIdleCallback" in window
-        ? window.requestIdleCallback(loadGoogle, { timeout: 2500 })
-        : setTimeout(loadGoogle, 2500);
-    const events = ["pointerdown", "keydown", "touchstart"] as const;
-    events.forEach((e) => window.addEventListener(e, loadGoogle, { once: true, passive: true }));
+    // Third-party tags never compete with the first render: they start on the
+    // first interaction, or a few seconds after load when the main thread is idle.
+    let started = false;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const start = () => {
+      if (started) return;
+      started = true;
+      loadGoogle();
+      loadMeta();
+    };
+    const events = ["pointerdown", "keydown", "touchstart", "scroll"] as const;
+    events.forEach((e) => window.addEventListener(e, start, { once: true, passive: true }));
 
     const onLoad = () => {
-      schedule();
-      loadMeta();
+      timer = setTimeout(() => {
+        if ("requestIdleCallback" in window) window.requestIdleCallback(start, { timeout: 2000 });
+        else start();
+      }, IDLE_LOAD_DELAY_MS);
     };
     if (document.readyState === "complete") onLoad();
     else window.addEventListener("load", onLoad, { once: true });
 
     const onConsent = (e: Event) => {
-      if ((e as CustomEvent<StoredConsent>).detail.categories.marketing) loadMeta();
+      if (started && (e as CustomEvent<StoredConsent>).detail.categories.marketing) loadMeta();
     };
     window.addEventListener(CONSENT_CHANGED_EVENT, onConsent);
 
@@ -87,7 +105,8 @@ export function Analytics() {
     document.addEventListener("click", onClick);
 
     return () => {
-      events.forEach((e) => window.removeEventListener(e, loadGoogle));
+      clearTimeout(timer);
+      events.forEach((e) => window.removeEventListener(e, start));
       window.removeEventListener("load", onLoad);
       window.removeEventListener(CONSENT_CHANGED_EVENT, onConsent);
       document.removeEventListener("click", onClick);

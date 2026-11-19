@@ -62,7 +62,7 @@ export default function BlogPage() {
             {posts.map((post) => (
               <article
                 key={post.id}
-                className="flex flex-col overflow-hidden rounded-5xl border border-slate-50 bg-white shadow-[0_10px_40px_rgba(0,0,0,0.03)] transition-all duration-700 hover:-translate-y-2 hover:shadow-[0_30px_80px_rgba(188,108,37,0.15)]"
+                className="flex flex-col overflow-hidden rounded-5xl border border-slate-50 bg-white shadow-[0_10px_40px_rgba(0,0,0,0.03)] transition-[translate,box-shadow] duration-700 hover:-translate-y-2 hover:shadow-[0_30px_80px_rgba(188,108,37,0.15)]"
               >
                 <div className="h-64 overflow-hidden">
                   <SiteImage

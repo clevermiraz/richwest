@@ -33,7 +33,7 @@ export function GoogleReviewsLink({
     >
       <GoogleIcon />
       {label}
-      <ArrowUpRight size={16} aria-hidden="true" className="text-slate-500" />
+      <ArrowUpRight size={16} aria-hidden="true" className="text-slate-600" />
       <span className="sr-only">(opens in a new tab)</span>
     </a>
   );

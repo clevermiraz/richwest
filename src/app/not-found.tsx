@@ -37,7 +37,7 @@ export default function NotFound() {
             </Link>
           </div>
           <div className="border-t border-slate-200 pt-8">
-            <h2 className="mb-4 text-sm font-black tracking-widest text-slate-500 uppercase">Popular services</h2>
+            <h2 className="mb-4 text-sm font-black tracking-widest text-slate-600 uppercase">Popular services</h2>
             <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               {popularServices.map((s) => (
                 <li key={s.href}>

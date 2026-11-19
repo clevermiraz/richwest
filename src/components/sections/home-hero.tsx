@@ -8,12 +8,7 @@ export function HomeHero() {
   return (
     <section className="relative flex h-[100svh] min-h-[600px] items-center overflow-hidden bg-slate-950 md:min-h-[700px]">
       <div className="absolute inset-0 z-0">
-        <SiteImage
-          src={hero.backgroundImageUrl}
-          priority
-          sizes="100vw"
-          className="h-full w-full animate-slow-zoom object-cover"
-        />
+        <SiteImage src={hero.backgroundImageUrl} priority sizes="100vw" className="h-full w-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-r from-slate-950/85 via-slate-950/45 to-slate-950/5" />
         <div className="absolute inset-0 bg-gradient-to-b from-slate-950/30 via-transparent to-slate-950/80" />
       </div>

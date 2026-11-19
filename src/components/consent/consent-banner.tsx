@@ -82,8 +82,8 @@ export function ConsentBanner() {
                 />
                 <label htmlFor={id} className="text-sm leading-snug">
                   <span className="font-semibold text-slate-900">{c.label}</span>
-                  {locked && <span className="text-slate-400"> (always on)</span>}
-                  <span className="block text-slate-500">{c.note}</span>
+                  {locked && <span className="text-slate-600"> (always on)</span>}
+                  <span className="block text-slate-600">{c.note}</span>
                 </label>
               </li>
             );
@@ -114,7 +114,7 @@ export function ConsentBanner() {
             onClick={() => setExpanded(true)}
             aria-expanded={false}
             aria-controls="cookie-choices"
-            className="px-3 py-2.5 text-sm font-semibold whitespace-nowrap text-slate-500 underline underline-offset-2 transition-colors hover:text-slate-900"
+            className="px-3 py-2.5 text-sm font-semibold whitespace-nowrap text-slate-600 underline underline-offset-2 transition-colors hover:text-slate-900"
           >
             {mode === "notice" ? "Turn off" : "Choose"}
           </button>

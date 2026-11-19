@@ -8,7 +8,7 @@ export interface Crumb {
 
 /** Visible breadcrumb trail. Pair with breadcrumbSchema() for rich results. */
 export function Breadcrumbs({ items, tone = "dark" }: { items: readonly Crumb[]; tone?: "light" | "dark" }) {
-  const link = tone === "light" ? "text-white/70 hover:text-white" : "text-slate-500 hover:text-wood-ink";
+  const link = tone === "light" ? "text-white/70 hover:text-white" : "text-slate-600 hover:text-wood-ink";
   const current = tone === "light" ? "text-white font-semibold" : "text-slate-900 font-semibold";
   const separator = tone === "light" ? "text-white/40" : "text-slate-400";
 

@@ -1,7 +1,7 @@
 "use client";
 
-import { ChevronDown, CircleAlert, CircleCheck, Clock, Send } from "lucide-react";
-import { useActionState } from "react";
+import { ChevronDown, CircleAlert, CircleCheck, Clock, LoaderCircle, Send } from "lucide-react";
+import { useActionState, useEffect, useRef } from "react";
 import { submitContact } from "@/app/actions/contact";
 import { contactServiceOptions } from "@/content/home";
 import type { ContactField, ContactState } from "@/lib/contact-schema";
@@ -27,13 +27,21 @@ export function ContactForm() {
   const errors = state.status === "error" ? (state.fieldErrors ?? {}) : {};
   const values = state.status === "error" ? (state.values ?? {}) : {};
 
+  const formRef = useRef<HTMLFormElement>(null);
+
+  // After a failed submit, move focus to the first field the server rejected.
+  useEffect(() => {
+    if (state.status !== "error" || !state.fieldErrors) return;
+    formRef.current?.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus();
+  }, [state]);
+
   const a11y = (field: ContactField) => ({
     "aria-invalid": errors[field] ? true : undefined,
     "aria-describedby": errors[field] ? `contact-${field}-error` : undefined,
   });
 
   return (
-    <form action={formAction} className="space-y-6">
+    <form ref={formRef} action={formAction} aria-busy={pending} className="space-y-6">
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <div>
           <label htmlFor="contact-name" className="form-label">
@@ -47,7 +55,8 @@ export function ContactForm() {
             required
             maxLength={120}
             defaultValue={values.name}
-            placeholder="Your name"
+            placeholder="Your name…"
+            enterKeyHint="next"
             className="form-input"
             {...a11y("name")}
           />
@@ -68,6 +77,7 @@ export function ContactForm() {
             maxLength={32}
             defaultValue={values.phone}
             placeholder="+65 1234 5678"
+            enterKeyHint="next"
             className="form-input"
             {...a11y("phone")}
           />
@@ -85,6 +95,10 @@ export function ContactForm() {
           type="email"
           inputMode="email"
           autoComplete="email"
+          autoCapitalize="none"
+          autoCorrect="off"
+          spellCheck={false}
+          enterKeyHint="next"
           required
           maxLength={200}
           defaultValue={values.email}
@@ -120,7 +134,7 @@ export function ContactForm() {
           <ChevronDown
             size={20}
             aria-hidden="true"
-            className="pointer-events-none absolute top-1/2 right-5 -translate-y-1/2 text-slate-500"
+            className="pointer-events-none absolute top-1/2 right-5 -translate-y-1/2 text-slate-600"
           />
         </div>
         <FieldError id="contact-service-error" message={errors.service} />
@@ -128,7 +142,7 @@ export function ContactForm() {
 
       <div>
         <label htmlFor="contact-message" className="form-label">
-          Your Message <span className="font-medium tracking-normal text-slate-500 normal-case">(optional)</span>
+          Your Message <span className="font-medium tracking-normal text-slate-600 normal-case">(optional)</span>
         </label>
         <textarea
           id="contact-message"
@@ -136,7 +150,7 @@ export function ContactForm() {
           rows={4}
           maxLength={5000}
           defaultValue={values.message}
-          placeholder="Tell us about your project, including the area size and location if you know them."
+          placeholder="Tell us about your project, including the area size and location if you know them…"
           className="form-input resize-y"
         />
       </div>
@@ -152,8 +166,12 @@ export function ContactForm() {
         disabled={pending}
         className="btn btn-lg btn-dark w-full transition-transform hover:scale-[1.02] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-70"
       >
-        {pending ? "Sending..." : "Send inquiry"}
-        <Send size={20} aria-hidden="true" />
+        {pending ? "Sending…" : "Send inquiry"}
+        {pending ? (
+          <LoaderCircle size={20} aria-hidden="true" className="animate-spin motion-reduce:animate-none" />
+        ) : (
+          <Send size={20} aria-hidden="true" />
+        )}
       </button>
 
       <p className="flex items-center justify-center gap-2 text-sm font-medium text-slate-600">

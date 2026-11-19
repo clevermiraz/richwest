@@ -71,7 +71,7 @@ export function Header() {
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-all duration-500 ease-in-out",
+        "fixed inset-x-0 top-0 z-50 transition-[background-color,padding,box-shadow,border-color] duration-500 ease-in-out",
         scrolled
           ? "border-b border-slate-100 bg-white/90 py-3 shadow-[0_2px_20px_rgba(0,0,0,0.08)] backdrop-blur-xl"
           : "bg-transparent py-6",
@@ -85,7 +85,7 @@ export function Header() {
       )}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
         <div className="flex items-center justify-between">
-          <Link href="/" className="flex items-center" aria-label="Richwest Integrated, go to homepage">
+          <Link href="/" className="flex items-center" aria-label="Richwest Integrated, go to homepage" translate="no">
             <Logo variant={overHero ? "light" : "dark"} className="h-9 w-auto md:h-10 lg:h-11" />
           </Link>
 
@@ -151,7 +151,7 @@ export function Header() {
         <div
           ref={panelRef}
           id="mobile-navigation"
-          className="absolute inset-x-0 top-full max-h-[calc(100dvh-var(--header-h))] overflow-hidden overflow-y-auto border-t border-slate-100 bg-white shadow-2xl lg:hidden"
+          className="absolute inset-x-0 top-full max-h-[calc(100dvh-var(--header-h))] overflow-hidden overflow-y-auto overscroll-contain border-t border-slate-100 bg-white shadow-2xl lg:hidden"
         >
           <nav className="space-y-2 px-6 py-10" aria-label="Mobile">
             {mainNav.map((item) => {

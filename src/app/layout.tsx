@@ -61,7 +61,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <head>
         {/* Consent Mode v2 defaults must be set before any Google tag loads. */}
         <script id="consent-defaults" dangerouslySetInnerHTML={{ __html: consentDefaultsScript }} />
-        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        {/* Tags load after interaction, so a DNS lookup is enough; a preconnect would go unused. */}
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
       </head>
       <body className="font-sans">
         <JsonLd data={[localBusinessSchema(), websiteSchema()]} />

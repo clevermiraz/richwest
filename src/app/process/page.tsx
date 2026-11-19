@@ -78,7 +78,7 @@ export default function ProcessPage() {
                   <Icon name={c.icon} size={40} className="text-wood-ink" />
                 </div>
                 <h3 className="mb-4 text-2xl font-black text-slate-900">{c.title}</h3>
-                <p className="text-lg leading-relaxed font-medium text-slate-500">{c.desc}</p>
+                <p className="text-lg leading-relaxed font-medium text-slate-600">{c.desc}</p>
               </div>
             ))}
           </div>

@@ -78,9 +78,9 @@ export default function ServicesPage() {
               <li key={s.slug}>
                 <Link
                   href={`/services/${s.slug}`}
-                  className="group block h-full rounded-4xl border border-slate-100 bg-slate-50 p-8 transition-all hover:border-wood-accent/30 hover:bg-white hover:shadow-xl"
+                  className="group block h-full rounded-4xl border border-slate-100 bg-slate-50 p-8 transition-[border-color,background-color,box-shadow] hover:border-wood-accent/30 hover:bg-white hover:shadow-xl"
                 >
-                  <p className="mb-3 text-xs font-black tracking-[0.25em] text-slate-500 uppercase">
+                  <p className="mb-3 text-xs font-black tracking-[0.25em] text-slate-600 uppercase">
                     {s.primaryKeyword}
                   </p>
                   <h3 className="text-2xl font-black text-slate-900 transition-colors group-hover:text-wood-ink">

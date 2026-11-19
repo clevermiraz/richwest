@@ -93,7 +93,7 @@ export default function ContactPage() {
                   <div>
                     <h3 className="mb-1 font-bold text-slate-900">Address</h3>
                     <address className="text-slate-600 not-italic">{site.address.full}</address>
-                    <p className="mt-1 text-sm text-slate-500">(Visit by appointment only)</p>
+                    <p className="mt-1 text-sm text-slate-600">(Visit by appointment only)</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">

@@ -31,8 +31,11 @@
 /* ---------- Base ---------- */
 @layer base {
   html {
+    color-scheme: light;
     scroll-behavior: smooth;
     scroll-padding-top: var(--header-offset);
+    -webkit-tap-highlight-color: rgb(188 108 37 / 0.15);
+    text-size-adjust: 100%;
   }
 
   body {
@@ -128,7 +131,7 @@
   }
 
   .form-input {
-    @apply w-full rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 text-slate-900 transition-colors placeholder:text-slate-400 focus-visible:border-transparent focus-visible:ring-2 focus-visible:ring-wood-ink;
+    @apply w-full rounded-2xl border border-slate-300 bg-slate-50 px-5 py-4 text-slate-900 transition-colors placeholder:text-slate-500 user-invalid:border-red-500 focus-visible:border-transparent focus-visible:ring-2 focus-visible:ring-wood-ink aria-invalid:border-red-500;
   }
 
   .form-label {
@@ -170,32 +173,19 @@
   }
 }
 
-@keyframes slow-zoom {
-  from {
-    transform: scale(1);
-  }
-  to {
-    transform: scale(1.1);
-  }
-}
-
-@utility animate-slow-zoom {
-  will-change: transform;
-  animation: slow-zoom 20s ease-in-out infinite alternate;
-}
-
+/*
+ * Above-the-fold page intros only slide in; they never start transparent, so
+ * the heading (often the LCP element) is painted with the first frame.
+ */
 @keyframes fade-up {
   from {
-    opacity: 0;
-    transform: translateY(20px);
+    translate: 0 16px;
   }
   to {
-    opacity: 1;
-    transform: none;
+    translate: 0 0;
   }
 }
 
-/* Runs once on load for above-the-fold page intros. */
 @utility animate-fade-up {
   animation: fade-up 0.6s ease-out both;
 }

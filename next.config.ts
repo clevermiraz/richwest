@@ -6,6 +6,13 @@ const securityHeaders = [
   { key: "X-Frame-Options", value: "SAMEORIGIN" },
   { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=(), browsing-topics=()" },
   { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" },
+  { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
+  {
+    // Baseline hardening that keeps pages fully static. A nonce-based script-src
+    // would force every page to render per request, which this SEO site avoids.
+    key: "Content-Security-Policy",
+    value: "base-uri 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self'; upgrade-insecure-requests",
+  },
 ];
 
 const nextConfig: NextConfig = {
@@ -13,6 +20,10 @@ const nextConfig: NextConfig = {
   partialPrefetching: true,
   poweredByHeader: false,
   reactStrictMode: true,
+  experimental: {
+    // Tailwind output is small, so inlining it removes the only render-blocking request.
+    inlineCss: true,
+  },
   turbopack: {
     rules: {
       "*.css": {

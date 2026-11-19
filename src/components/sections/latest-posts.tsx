@@ -26,7 +26,7 @@ export function LatestPosts() {
             <article
               key={post.id}
               {...reveal(i)}
-              className="group relative flex h-full flex-col overflow-hidden rounded-5xl border border-slate-50 bg-white shadow-[0_10px_40px_rgba(0,0,0,0.03)] transition-all duration-700 hover:-translate-y-3 hover:shadow-[0_30px_80px_rgba(188,108,37,0.15)]"
+              className="group relative flex h-full flex-col overflow-hidden rounded-5xl border border-slate-50 bg-white shadow-[0_10px_40px_rgba(0,0,0,0.03)] transition-[translate,box-shadow] duration-700 hover:-translate-y-3 hover:shadow-[0_30px_80px_rgba(188,108,37,0.15)]"
             >
               <div className="relative h-72 overflow-hidden">
                 <SiteImage
@@ -48,7 +48,7 @@ export function LatestPosts() {
                 <h3 className="mb-6 line-clamp-2 text-2xl leading-tight font-black text-slate-900 transition-colors group-hover:text-wood-ink">
                   {post.title}
                 </h3>
-                <p className="mb-10 line-clamp-3 grow text-lg leading-relaxed font-medium text-slate-500">
+                <p className="mb-10 line-clamp-3 grow text-lg leading-relaxed font-medium text-slate-600">
                   {post.excerpt}
                 </p>
                 <Link

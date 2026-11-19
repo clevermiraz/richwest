@@ -27,7 +27,7 @@ export function Expertise() {
             <article
               key={card.title}
               {...reveal(i)}
-              className="group overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-[0_10px_40px_rgba(0,0,0,0.05)] transition-[box-shadow,transform] duration-500 hover:-translate-y-2.5 hover:shadow-[0_30px_80px_rgba(188,108,37,0.15)] md:rounded-5xl"
+              className="group overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-[0_10px_40px_rgba(0,0,0,0.05)] transition-[box-shadow,translate] duration-500 hover:-translate-y-2.5 hover:shadow-[0_30px_80px_rgba(188,108,37,0.15)] md:rounded-5xl"
             >
               <div className="relative h-56 overflow-hidden sm:h-64 md:h-72">
                 <SiteImage
@@ -45,7 +45,7 @@ export function Expertise() {
                 </div>
               </div>
               <div className="p-5 sm:p-7 md:p-8">
-                <p className="mb-6 text-sm leading-relaxed font-medium text-slate-500 sm:text-base">
+                <p className="mb-6 text-sm leading-relaxed font-medium text-slate-600 sm:text-base">
                   {card.description}
                 </p>
                 <ul className="mb-6 space-y-2.5">
@@ -61,7 +61,7 @@ export function Expertise() {
                 </ul>
                 <Link
                   href={card.href}
-                  className="inline-flex items-center gap-2 text-xs font-black tracking-widest text-wood-ink uppercase transition-all hover:gap-3 sm:text-sm"
+                  className="inline-flex items-center gap-2 text-xs font-black tracking-widest text-wood-ink uppercase transition-[gap] hover:gap-3 sm:text-sm"
                 >
                   Explore Services
                   <span className="sr-only">: {card.title}</span>

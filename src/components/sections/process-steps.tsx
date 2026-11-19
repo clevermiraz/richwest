@@ -15,7 +15,7 @@ export function ProcessSteps() {
           <h2 className="heading-section mb-4 text-slate-900" {...reveal()}>
             Our Process
           </h2>
-          <p className="mx-auto max-w-2xl text-base font-medium text-slate-500 md:text-lg" {...reveal(1)}>
+          <p className="mx-auto max-w-2xl text-base font-medium text-slate-600 md:text-lg" {...reveal(1)}>
             From site survey to handover, a predictable and transparent process for every project in Singapore.
           </p>
         </div>
@@ -38,7 +38,7 @@ export function ProcessSteps() {
                   <span className="sr-only">Step {i + 1}: </span>
                   {step.title}
                 </h3>
-                <p className="max-w-[180px] text-sm leading-relaxed font-medium text-slate-500">{step.desc}</p>
+                <p className="max-w-[180px] text-sm leading-relaxed font-medium text-slate-600">{step.desc}</p>
               </li>
             ))}
           </ol>
