@@ -1,6 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import type { CSSProperties } from "react";
+import { HomeTypes } from "@/components/sections/home-types";
 import { PageHero } from "@/components/sections/page-hero";
 import { JsonLd } from "@/components/seo/json-ld";
 import { SiteImage } from "@/components/ui/site-image";
@@ -121,6 +122,8 @@ export default function ServicesPage() {
           </div>
         </section>
       ))}
+
+      <HomeTypes className="border-t border-line" />
 
       <section aria-labelledby="standard-heading" className="on-dark bg-night grain py-20 text-paper md:py-28">
         <div className="container-page grid gap-12 lg:grid-cols-12">

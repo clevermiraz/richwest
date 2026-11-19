@@ -1,5 +1,6 @@
 import { ContactSection } from "@/components/sections/contact-section";
 import { HomeHero } from "@/components/sections/home-hero";
+import { HomeTypes } from "@/components/sections/home-types";
 import { LatestPosts } from "@/components/sections/latest-posts";
 import { PortfolioGrid } from "@/components/sections/portfolio-grid";
 import { ProcessSteps } from "@/components/sections/process-steps";
@@ -21,6 +22,7 @@ export default function HomePage() {
     <>
       <HomeHero />
       <ServicesIndex />
+      <HomeTypes className="border-t border-line" />
       <PortfolioGrid />
       <ProcessSteps />
       <Testimonials />

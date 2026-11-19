@@ -4,7 +4,7 @@ import Link from "next/link";
 import { CookieSettingsButton } from "@/components/consent/cookie-settings-button";
 import { FacebookIcon, GoogleIcon, InstagramIcon, WhatsAppIcon } from "@/components/ui/icons";
 import { Logo } from "@/components/ui/logo";
-import { companyLinks, hoursDisplay, serviceGroups, site } from "@/lib/site";
+import { companyLinks, homeTypeGroup, hoursDisplay, serviceGroups, site } from "@/lib/site";
 
 /** Cached so the year is computed once per deployment, keeping pages static. */
 async function getCopyrightYear() {
@@ -129,7 +129,7 @@ export async function Footer() {
               Company
             </h2>
             <ul>
-              {[...companyLinks, ...serviceGroups[2].items].map((l) => (
+              {[...companyLinks, ...serviceGroups[2].items, ...homeTypeGroup.items].map((l) => (
                 <li key={l.href}>
                   <Link href={l.href} className={`${linkClass} inline-flex min-h-11 items-center`}>
                     {l.name}

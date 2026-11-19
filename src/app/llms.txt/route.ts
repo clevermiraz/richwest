@@ -1,4 +1,5 @@
 import { posts } from "@/content/posts";
+import { propertyPages } from "@/content/property-pages";
 import { services } from "@/content/services";
 import { absoluteUrl, hoursDisplay, site } from "@/lib/site";
 
@@ -28,6 +29,10 @@ export function GET() {
     "## Services",
     "",
     ...services.map((s) => `- [${s.title}](${absoluteUrl(`/services/${s.slug}`)}): ${s.description}`),
+    "",
+    "## Flooring by home type",
+    "",
+    ...propertyPages.map((p) => `- [${p.h1}](${absoluteUrl(`/${p.slug}`)}): ${p.intro}`),
     "",
     "## Guides",
     "",

@@ -121,6 +121,27 @@ export function serviceSchema(service: Service) {
   };
 }
 
+/** Service schema for a property-type guide (e.g. HDB flooring). */
+export function propertyServiceSchema(page: {
+  slug: string;
+  h1: string;
+  primaryKeyword: string;
+  metaDescription: string;
+  heroImage: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: page.h1,
+    serviceType: page.primaryKeyword,
+    description: page.metaDescription,
+    url: absoluteUrl(`/${page.slug}`),
+    image: absoluteUrl(page.heroImage),
+    areaServed: SINGAPORE,
+    provider: { "@id": BUSINESS_ID },
+  };
+}
+
 export function articleSchema(post: Post) {
   const url = absoluteUrl(`/blog/${post.slug}`);
   return {

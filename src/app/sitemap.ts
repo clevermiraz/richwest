@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { posts } from "@/content/posts";
+import { propertyPages } from "@/content/property-pages";
 import { services } from "@/content/services";
 import { absoluteUrl } from "@/lib/site";
 
@@ -34,6 +35,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.8,
       images: [absoluteUrl(s.heroImage)],
+    })),
+    ...propertyPages.map((p): Entry => ({
+      url: absoluteUrl(`/${p.slug}`),
+      lastModified: CONTENT_UPDATED,
+      changeFrequency: "monthly",
+      priority: 0.8,
+      images: [absoluteUrl(p.heroImage)],
     })),
     ...posts.map((p): Entry => ({
       url: absoluteUrl(`/blog/${p.slug}`),

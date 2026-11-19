@@ -7,7 +7,7 @@ import { Logo } from "@/components/ui/logo";
 import { SiteImage } from "@/components/ui/site-image";
 import { useRoutePath } from "@/hooks/use-route-path";
 import { cn } from "@/lib/cn";
-import { mainNav, serviceGroups, site } from "@/lib/site";
+import { homeTypeGroup, mainNav, type ServiceGroup, serviceGroups, site } from "@/lib/site";
 
 type Panel = "services" | "mobile" | null;
 
@@ -193,30 +193,13 @@ export function Header() {
         )}
       >
         <div className="container-page grid grid-cols-12 gap-10 py-10">
-          {serviceGroups.map((group) => (
-            <div key={group.name} className={group.items.length > 2 ? "col-span-3" : "col-span-2"}>
-              <p className="mb-1 font-display text-2xl text-ink">{group.name}</p>
-              <p className="mb-5 text-sm leading-snug text-ink-3">{group.blurb}</p>
-              <ul className="space-y-1">
-                {group.items.map((item) => (
-                  <li key={item.href}>
-                    <Link
-                      href={item.href}
-                      aria-current={pathname === item.href ? "page" : undefined}
-                      className="group -mx-2 flex items-center justify-between rounded-md px-2 py-1.5 text-[0.9375rem] text-ink-2 transition-colors hover:bg-paper-2 hover:text-ink aria-[current=page]:text-timber"
-                    >
-                      {item.name}
-                      <ArrowRight
-                        size={14}
-                        aria-hidden="true"
-                        className="arrow opacity-0 transition-opacity group-hover:opacity-100"
-                      />
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
+          {serviceGroups.slice(0, 2).map((group) => (
+            <MenuGroup key={group.name} group={group} pathname={pathname} className="col-span-3" />
           ))}
+          <div className="col-span-2 space-y-8">
+            <MenuGroup group={serviceGroups[2]} pathname={pathname} />
+            <MenuGroup group={homeTypeGroup} pathname={pathname} />
+          </div>
           <Link
             href="/portfolio"
             className="group relative col-span-4 overflow-hidden rounded-lg bg-night text-paper"
@@ -292,6 +275,11 @@ export function Header() {
 
           <div className="mt-8 grid grid-cols-2 gap-x-6 gap-y-2 text-[0.9375rem]">
             <p className="col-span-2 mb-1 text-sm font-medium text-ink-3">Popular services</p>
+            {homeTypeGroup.items.map((item) => (
+              <Link key={item.href} href={item.href} className="py-1.5 text-ink-2">
+                {item.name}
+              </Link>
+            ))}
             {serviceGroups
               .flatMap((g) => g.items.slice(0, 3))
               .map((item) => (
@@ -318,5 +306,33 @@ export function Header() {
         </nav>
       </div>
     </header>
+  );
+}
+
+/** One titled column of links in the services mega-menu. */
+function MenuGroup({ group, pathname, className }: { group: ServiceGroup; pathname: string; className?: string }) {
+  return (
+    <div className={className}>
+      <p className="mb-1 font-display text-2xl text-ink">{group.name}</p>
+      <p className="mb-4 text-sm leading-snug text-ink-3">{group.blurb}</p>
+      <ul className="space-y-1">
+        {group.items.map((item) => (
+          <li key={item.href}>
+            <Link
+              href={item.href}
+              aria-current={pathname === item.href ? "page" : undefined}
+              className="group -mx-2 flex items-center justify-between rounded-md px-2 py-1.5 text-[0.9375rem] text-ink-2 transition-colors hover:bg-paper-2 hover:text-ink aria-[current=page]:text-timber"
+            >
+              {item.name}
+              <ArrowRight
+                size={14}
+                aria-hidden="true"
+                className="arrow opacity-0 transition-opacity group-hover:opacity-100"
+              />
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }

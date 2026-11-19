@@ -110,6 +110,17 @@ export const serviceGroups: readonly ServiceGroup[] = [
   },
 ];
 
+/** Flooring guides by property type (each is a full page at the site root). */
+export const homeTypeGroup: ServiceGroup = {
+  name: "By home type",
+  blurb: "What works best in each kind of Singapore home.",
+  items: [
+    { name: "HDB Flooring", href: "/hdb-flooring" },
+    { name: "Condo Flooring", href: "/condo-flooring" },
+    { name: "Landed House Flooring", href: "/landed-house-flooring" },
+  ],
+};
+
 export const companyLinks = [
   { name: "About us", href: "/about" },
   { name: "Our process", href: "/process" },

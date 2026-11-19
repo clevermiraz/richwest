@@ -7,7 +7,7 @@ import { PageHero } from "@/components/sections/page-hero";
 import { ProcessSteps } from "@/components/sections/process-steps";
 import { JsonLd } from "@/components/seo/json-ld";
 import { FaqList } from "@/components/ui/faq-list";
-import { WhatsAppIcon } from "@/components/ui/icons";
+import { QuoteActions } from "@/components/ui/quote-actions";
 import { PostCard } from "@/components/ui/post-card";
 import { SiteImage } from "@/components/ui/site-image";
 import { posts } from "@/content/posts";
@@ -48,7 +48,6 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
   const relatedPosts = posts
     .filter((p) => (p.keywords as readonly string[]).includes(service.primaryKeyword))
     .slice(0, 3);
-  const whatsappHref = `${site.whatsapp}?text=${encodeURIComponent(`Hi Richwest, I'd like a quote for ${service.primaryKeyword}.`)}`;
 
   return (
     <>
@@ -72,41 +71,7 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
         image={service.heroImage}
         imageAlt={service.title}
       >
-        <div className="flex flex-col gap-3 sm:flex-row">
-          <Link
-            href="/contact"
-            className="btn btn-lg btn-primary"
-            data-track="quote_click"
-            data-section="service_hero_get_quote"
-          >
-            Get a free quote
-            <ArrowRight size={18} aria-hidden="true" className="arrow" />
-          </Link>
-          <a
-            href={whatsappHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn-lg btn-outline"
-            data-track="whatsapp_click"
-            data-section="service_hero_whatsapp"
-          >
-            <WhatsAppIcon size={18} />
-            WhatsApp us
-            <span className="sr-only">(opens in a new tab)</span>
-          </a>
-        </div>
-        <p className="mt-5 text-sm text-ink-3">
-          Prefer to talk? Call{" "}
-          <a
-            href={`tel:${site.phone.e164}`}
-            className="font-medium text-ink underline decoration-ink/30 underline-offset-4 hover:decoration-ink"
-            data-track="quote_click"
-            data-section="service_hero_call"
-          >
-            {site.phone.display}
-          </a>{" "}
-          · {site.replyPromise} · Free site visit
-        </p>
+        <QuoteActions section="service_hero" topic={service.primaryKeyword} />
       </PageHero>
 
       <section className="py-16 md:py-24">
