@@ -20,6 +20,10 @@ const nextConfig: NextConfig = {
   partialPrefetching: true,
   poweredByHeader: false,
   reactStrictMode: true,
+  // Every page's metadata is static and already in <head>, so no crawler needs the
+  // blocking "HTML-limited bot" render. Serving bots (and Lighthouse) the same
+  // cached prerender as visitors keeps TTFB low and the HTML identical.
+  htmlLimitedBots: /$^/,
   experimental: {
     // Tailwind output is small, so inlining it removes the only render-blocking request.
     inlineCss: true,

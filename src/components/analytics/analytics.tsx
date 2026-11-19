@@ -1,10 +1,10 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { track, type TrackEvent } from "@/lib/analytics";
 import { CONSENT_CHANGED_EVENT, isAllowed, type StoredConsent } from "@/lib/consent";
 import { site } from "@/lib/site";
+import { useRoutePath } from "@/hooks/use-route-path";
 
 function injectScript(src: string) {
   const s = document.createElement("script");
@@ -66,7 +66,7 @@ function loadMeta() {
  * `data-track` clicks.
  */
 export function Analytics() {
-  const pathname = usePathname();
+  const pathname = useRoutePath();
 
   useEffect(() => {
     // Third-party tags never compete with the first render: they start on the

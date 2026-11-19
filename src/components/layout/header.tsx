@@ -2,14 +2,14 @@
 
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Logo } from "@/components/ui/logo";
 import { cn } from "@/lib/cn";
 import { mainNav } from "@/lib/site";
+import { useRoutePath } from "@/hooks/use-route-path";
 
 export function Header() {
-  const pathname = usePathname();
+  const pathname = useRoutePath();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [openedAt, setOpenedAt] = useState(pathname);
