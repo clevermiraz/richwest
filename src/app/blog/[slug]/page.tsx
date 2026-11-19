@@ -34,6 +34,9 @@ export async function generateMetadata({ params }: PageProps<"/blog/[slug]">): P
   });
 }
 
+/** See the note on `instant` in app/services/[slug]/page.tsx: keeps the prerendered HTML fully inline for crawlers. */
+export const instant = false;
+
 export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">) {
   const post = getPost((await params).slug);
   if (!post) notFound();

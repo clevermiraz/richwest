@@ -760,6 +760,8 @@ const baseServices = [
 
 export type ServiceSlug = (typeof baseServices)[number]["slug"];
 
+const same = (a: string, b: string) => a.trim().toLowerCase() === b.trim().toLowerCase();
+
 /** Base copy merged with the SEO additions in service-extras.ts (title, meta, sections, FAQs). */
 export const services: readonly Service[] = baseServices.map((s) => {
   const extra = serviceExtras[s.slug];
@@ -768,8 +770,9 @@ export const services: readonly Service[] = baseServices.map((s) => {
     ...s,
     seoTitle: extra.seoTitle,
     metaDescription: extra.metaDescription,
-    sections: [...s.sections, ...extra.sections],
-    faq: [...s.faq, ...extra.faq],
+    // Never repeat a heading or question that the base copy already has.
+    sections: [...s.sections, ...extra.sections.filter((x) => !s.sections.some((b) => same(b.heading, x.heading)))],
+    faq: [...s.faq, ...extra.faq.filter((x) => !s.faq.some((b) => same(b.q, x.q)))],
   };
 });
 

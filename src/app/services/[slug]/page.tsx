@@ -33,6 +33,16 @@ export async function generateMetadata({ params }: PageProps<"/services/[slug]">
   });
 }
 
+/**
+ * Opts this route out of the dev-only "instant navigation" validation.
+ * Wrapping the page in <Suspense> would satisfy it, but React then ships the
+ * prerendered content inside a hidden <div> swapped in by script, which
+ * non-JS crawlers (several AI search bots) may not read. Every slug is
+ * prerendered as complete HTML via generateStaticParams; navigation still
+ * uses prerendering and prefetching exactly as before.
+ */
+export const instant = false;
+
 export default async function ServicePage({ params }: PageProps<"/services/[slug]">) {
   const service = getService((await params).slug);
   if (!service) notFound();

@@ -89,8 +89,8 @@ export const serviceExtras: Record<string, ServiceExtras> = {
     ],
     faq: [
       {
-        q: "Can vinyl flooring be installed over existing tiles?",
-        a: "Yes, in most cases. The tiles need to be well bonded and reasonably level. We fill deep grout lines and fix hollow tiles before laying the vinyl.",
+        q: "Do I need an underlay for vinyl flooring?",
+        a: "Many SPC planks come with an attached underlay. A separate acoustic underlay is worth adding in condominiums or upper floors where footstep noise matters, and some MCSTs require one.",
       },
       {
         q: "Is vinyl flooring suitable for kitchens?",
